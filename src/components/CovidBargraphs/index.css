@@ -1,0 +1,104 @@
+.confirmed-cases-line-chart {
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.confirmed-bg {
+  background-color: #331427;
+}
+
+.active-bg {
+  background-color: #132240;
+}
+.recovered-bg {
+  background-color: #182829;
+}
+
+.deceased-bg {
+  background-color: #1c1c2b;
+}
+
+.tested-bg {
+  background-color: #230f41;
+}
+
+.confirmed-line-chart {
+  color: #ff073a;
+}
+
+.custom-tooltip {
+  background-color: #e2e8f0;
+  height: 56px;
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.label-date {
+  font-size: 8px;
+  margin: 0px;
+}
+.label-count {
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.confirmed-chart-tag {
+  font-size: 12px;
+  color: #ff073a;
+  text-align: right;
+}
+
+.confirmed {
+  color: #ff073a;
+}
+
+.active {
+  color: #007bff;
+}
+
+.recovered {
+  color: #27a243;
+}
+
+.deceased {
+  color: #6c757d;
+}
+.tested {
+  color: #9673b9;
+}
+.line-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 48px;
+}
+
+.bar-chart {
+  width: 300px;
+  height: 250px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.covid-bar-graphs {
+  min-height: 100vh;
+}
+.label-text {
+  color: white !important;
+}
+
+@media screen and (min-width: 768px) {
+  .bar-chart {
+    width: 600px;
+    margin-top: 56px;
+    margin-bottom: 56px;
+  }
+  .covid-bar-graphs {
+    min-height: 100vh;
+  }
+}

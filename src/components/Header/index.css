@@ -1,0 +1,124 @@
+.nav-bar {
+  background-color: #1e1e30;
+  min-width: 360px;
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-logo {
+  font-size: 16px;
+  width: 104px;
+  height: 24px;
+  padding-left: 24px;
+  top: 16px;
+  text-align: center;
+  font-family: 'Bree Serif';
+  color: #f8fafc;
+}
+
+.span-logo {
+  font-family: 'Bree Serif';
+  color: #3b82f6;
+}
+
+.menu-button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding-left: 10.87px;
+}
+
+.nav-links-tabs-section {
+  background-color: #1e1e30;
+  min-height: 100vh;
+  padding-top: 10px;
+  width: 360px;
+}
+.nav-links-container {
+  display: flex;
+  padding-left: 0px;
+}
+.nav-link-items {
+  list-style-type: none;
+  color: #94a3b8;
+  line-height: 26px;
+  font-weight: 400;
+  font-size: 16px;
+  height: 26px;
+  width: 42px;
+  padding-left: 32px;
+  top: 80px;
+  border-radius: null px;
+  margin-right: 24px;
+}
+.links {
+  text-decoration: none;
+  color: #94a3b8;
+}
+.nav-bar-tabs-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-button {
+  padding-right: 24px;
+  border: none;
+  background-color: transparent;
+}
+.desktop-section {
+  display: none;
+  padding-left: 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .nav-bar {
+    height: 80px;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    border-radius: 0px;
+  }
+
+  .app-logo {
+    height: 24px;
+    width: 130px;
+    left: 150px;
+    top: 28px;
+    font-size: 20px;
+    border-radius: null px;
+  }
+  .mobile-icon {
+    display: none;
+  }
+  .desktop-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 0px;
+  }
+  .desktop-nav-link-items {
+    list-style-type: none;
+    height: 24px;
+    width: 43px;
+    left: 1156px;
+    top: 28px;
+    border-radius: null px;
+    margin-right: 24px;
+  }
+  .focus {
+    color: #f8fafc;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .nav-bar {
+    width: 100%;
+    height: 80px;
+    left: 0px;
+    top: 0px;
+    border-radius: 0px;
+  }
+}

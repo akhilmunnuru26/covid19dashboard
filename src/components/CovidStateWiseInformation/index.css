@@ -1,0 +1,99 @@
+.state-info-table {
+  border-collapse: collapse;
+}
+
+.table-header-row {
+  border-bottom: 1px solid #475569;
+}
+
+.sorting-buttons {
+  background-color: transparent;
+  border: none;
+}
+.sorting-buttons-container {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.sort-icon {
+  font-size: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #475569;
+}
+
+.table-headers-title {
+  font-size: 16px;
+  color: #f9fafc;
+}
+.info-table {
+  background: #1e1e30;
+  border-radius: 12px;
+  border: 1px solid #475569;
+  width: 100vw;
+  margin-inline: auto;
+  margin-top: 110px;
+  overflow: auto;
+}
+.state-table-row {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+.state-details {
+  display: flex;
+  align-items: center;
+}
+.data {
+  font-size: 14px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.state-name {
+  color: #f9fafc;
+}
+.state-confirmed-count {
+  color: #ff073a;
+  text-align: center;
+}
+.state-active-count {
+  color: #007bff;
+  text-align: center;
+}
+.state-recovered-count {
+  color: #28a745;
+  text-align: center;
+}
+.state-deceased-count {
+  color: #6c757d;
+  text-align: center;
+}
+.state-population-count {
+  color: #94a3b8;
+  text-align: center;
+}
+
+.table-header {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-right: 32px;
+  padding-left: 32px;
+}
+
+.links {
+  text-decoration: none;
+  color: #f1f5f9;
+}
+
+@media screen and (min-width: 768px) {
+  .info-table {
+    width: 1146px;
+    left: 150px;
+    top: 576px;
+    border-radius: 12px;
+    border-collapse: collapse;
+    margin-top: 140px;
+  }
+}

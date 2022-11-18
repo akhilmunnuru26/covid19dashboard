@@ -1,0 +1,60 @@
+.label {
+  background: transparent;
+  list-style-type: none;
+  width: 100%;
+}
+
+.link-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+}
+
+.select-element {
+  width: 100%;
+  border: none;
+}
+
+.labels-container {
+  padding-left: 0px;
+}
+
+.state-code-container {
+  background-color: rgba(28, 212, 212, 0.16);
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 63px;
+  border-radius: 4px;
+  height: 43px;
+}
+
+.label-state-code {
+  color: #facc15;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 5px;
+}
+
+.right-arrow {
+  color: #facc15;
+  font-size: 12px;
+}
+.label-name {
+  color: #64748b;
+  font-size: 14px;
+}
+
+@media screen and (min-width: 768px) {
+  .right-arrow {
+    color: #facc15;
+    font-size: 16px;
+  }
+  .label-name {
+    color: #64748b;
+    font-size: 16px;
+  }
+}

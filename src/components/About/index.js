@@ -52,7 +52,7 @@ class About extends Component {
 
         <ul testid="faqsUnorderedList" className="faqs-container">
           {faqData.map(item => {
-            const {qno, question, answer} = item
+            const {question, answer} = item
             const formattedAnswer = answer.split('<a')[0]
             const urlStartIndex = answer.indexOf('https:')
             const urlLastIndex = answer.lastIndexOf('.org')

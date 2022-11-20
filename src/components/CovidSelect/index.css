@@ -81,7 +81,29 @@
   list-style-type: none;
 }
 
-.top-district-name {
+.top-district-name-confirmed {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.06px;
+  margin-left: 16px;
+}
+.top-district-name-active {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.06px;
+  margin-left: 16px;
+}
+.top-district-name-recovered {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.06px;
+  width: 100%;
+  margin-left: 16px;
+}
+.top-district-name-deceased {
   color: #94a3b8;
   font-size: 12px;
   font-weight: 500;
@@ -90,12 +112,54 @@
   margin-left: 16px;
 }
 
-.top-district-cases {
+.top-district-cases-confirmed {
   color: #94a3b8;
   font-size: 16px;
   line-height: 18.75px;
   font-weight: 500;
-  width: 46px;
+}
+.top-district-cases-active {
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 18.75px;
+  font-weight: 500;
+}
+.top-district-cases-recovered {
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 18.75px;
+  font-weight: 500;
+}
+.top-district-cases-deceased {
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 18.75px;
+  font-weight: 500;
+}
+
+.top-district-cases-deceased:hover {
+  color: #6c757d;
+}
+.top-district-cases-confirmed:hover {
+  color: #ff073a;
+}
+.top-district-cases-active:hover {
+  color: #007bff;
+}
+.top-district-cases-recovered:hover {
+  color: #28a745;
+}
+.top-district-name-deceased:hover {
+  color: #6c757d;
+}
+.top-district-name-confirmed:hover {
+  color: #ff073a;
+}
+.top-district-name-active:hover {
+  color: #007bff;
+}
+.top-district-name-recovered:hover {
+  color: #28a745;
 }
 
 @media screen and (min-width: 768px) {
@@ -125,20 +189,62 @@
     min-height: 100vh;
     min-width: 768px;
   }
-  .top-district-item {
-    margin-left: 62px;
-    margin-right: 62px;
-    width: 250px;
+  .top-districts-container {
+    flex-wrap: wrap;
   }
-  .top-district-name {
+  .top-district-item {
+    width: 250px;
+    color: #94a3b8;
+  }
+
+  .top-district-name-confirmed {
     color: #94a3b8;
     font-size: 16px;
     font-weight: 500;
-    width: 120px;
+    width: 135px;
+    line-height: 18.75px;
+  }
+  .top-district-name-active {
+    color: #94a3b8;
+    font-size: 16px;
+    font-weight: 500;
+    width: 135px;
+    line-height: 18.75px;
+  }
+  .top-district-name-recovered {
+    color: #94a3b8;
+    font-size: 16px;
+    font-weight: 500;
+    width: 135px;
+    line-height: 18.75px;
+  }
+  .top-district-name-deceased {
+    color: #94a3b8;
+    font-size: 16px;
+    font-weight: 500;
+    width: 135px;
     line-height: 18.75px;
   }
 
-  .top-district-cases {
+  .top-district-cases-confirmed {
+    color: #94a3b8;
+    font-size: 24px;
+    line-height: 18.75px;
+    font-weight: 500;
+  }
+  .top-district-cases-active {
+    color: #94a3b8;
+    font-size: 24px;
+    line-height: 18.75px;
+    font-weight: 500;
+  }
+  .top-district-cases-recovered {
+    color: #94a3b8;
+    font-size: 24px;
+    line-height: 18.75px;
+    font-weight: 500;
+  }
+  .top-district-cases-deceased {
     color: #94a3b8;
     font-size: 24px;
     line-height: 18.75px;
@@ -147,6 +253,30 @@
 
   .heading-tag {
     font-size: 32px;
+  }
+  .top-district-cases-deceased:hover {
+    color: #6c757d;
+  }
+  .top-district-cases-confirmed:hover {
+    color: #ff073a;
+  }
+  .top-district-cases-active:hover {
+    color: #007bff;
+  }
+  .top-district-cases-recovered:hover {
+    color: #28a745;
+  }
+  .top-district-name-deceased:hover {
+    color: #6c757d;
+  }
+  .top-district-name-confirmed:hover {
+    color: #ff073a;
+  }
+  .top-district-name-active:hover {
+    color: #007bff;
+  }
+  .top-district-name-recovered:hover {
+    color: #28a745;
   }
 }
 
@@ -183,7 +313,6 @@
     font-size: 16px;
     font-weight: 500;
     width: 150px;
-    margin-left: 21px;
   }
 
   .top-district-cases {

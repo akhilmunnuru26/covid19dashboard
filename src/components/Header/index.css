@@ -9,11 +9,9 @@
 
 .app-logo {
   font-size: 16px;
-  width: 104px;
-  height: 24px;
   padding-left: 24px;
   top: 16px;
-  text-align: center;
+  margin: 0px;
   font-family: 'Bree Serif';
   color: #f8fafc;
 }
@@ -21,6 +19,16 @@
 .span-logo {
   font-family: 'Bree Serif';
   color: #3b82f6;
+  font-size: 16px;
+  margin: 0px;
+}
+.home-logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.links {
+  text-decoration: none;
 }
 
 .menu-button {

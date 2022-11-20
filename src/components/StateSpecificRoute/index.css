@@ -4,6 +4,8 @@
 
 .specific-state-page {
   background-color: #161625;
+  min-height: 100vh;
+  padding-bottom: 24px;
 }
 
 .specific-page-content {
@@ -42,12 +44,14 @@
 }
 @media screen and (min-width: 992px) {
   .specific-state-name {
-    font-size: 32px;
+    font-size: 25px;
   }
   .state-name-container {
-    width: 312px;
-    height: 64px;
+    min-width: 352px;
+    max-width: 502px;
+    height: 70px;
     border-radius: 32px;
+    padding: 20px;
   }
 }
 

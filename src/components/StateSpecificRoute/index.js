@@ -3,6 +3,7 @@ import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import CovidSelect from '../CovidSelect'
 import Footer from '../Footer'
+import CovidGraphs from '../CovidGraphs'
 
 import './index.css'
 
@@ -249,7 +250,7 @@ class StateSpecificRoute extends Component {
     const apiUrl = `https://apis.ccbp.in/covid19-state-wise-data/`
     const response = await fetch(apiUrl)
     const data = await response.json()
-    console.log(data)
+    // console.log(data)
 
     if (response.ok === true) {
       const resultList = []
@@ -343,6 +344,9 @@ class StateSpecificRoute extends Component {
       <div className="specific-state-page">
         <Header />
         {this.renderApiStatusViews()}
+        <div>
+          <Footer />
+        </div>
       </div>
     )
   }

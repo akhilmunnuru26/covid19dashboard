@@ -6,7 +6,7 @@ import {
   YAxis,
   // CartesianGrid,
   Tooltip,
-  // Legend,
+  Legend,
   Line,
   BarChart,
   Bar,
@@ -30,6 +30,10 @@ const CustomLabel = props => {
       {value}
     </text>
   )
+}
+
+const CasesFormatter = count => {
+  console.log(count)
 }
 
 const CustomTooltip = ({active, payload}: any) => {
@@ -63,6 +67,12 @@ const DataFormatter = number => {
   return number.toString()
 }
 
+const DateFormatter = number => {
+  const options = {month: 'short', day: 'numeric'}
+  const date = new Date(number).toLocaleDateString('en-us', options)
+  return date
+}
+
 const tabConstants = {
   active: 'ACTIVE',
   confirmed: 'CONFIRMED',
@@ -70,242 +80,558 @@ const tabConstants = {
   recovered: 'RECOVERED',
 }
 
-class CovidBargraphs extends Component {
+class CovidGraphs extends Component {
   state = {apiStatus: apiStatusConst.progress, timelineData: []}
 
   componentDidMount() {
     this.getTimelineData()
   }
 
-  renderBarGraphs = () => {
+  renderConfirmedCasesBarChart = () => {
     const {timelineData} = this.state
-
-    // const {status} = this.props
-
-    const activeData = timelineData
-      .map(item => ({
-        date: item.date,
-        count: item.confirmed - (item.recovered + item.deceased),
-      }))
-      .slice(0, 6)
-    // console.log(active)
-
     const confirmedData = timelineData
       .map(item => ({
         date: item.date,
         count: item.confirmed,
       }))
       .slice(0, 6)
-      .sort()
 
-    const recoveredData = timelineData
-      .map(item => ({
-        date: item.date,
-        count: item.recovered,
-      }))
-      .slice(0, 6)
-
-    const deceasedData = timelineData
-      .map(item => ({
-        date: item.date,
-        count: item.deceased,
-      }))
-      .slice(0, 6)
-
-    const {status} = this.props
-    let data = []
-    let color = ''
-    switch (status) {
-      case tabConstants.active:
-        data = activeData
-        color = '#0A4FA0'
-        break
-      case tabConstants.confirmed:
-        data = confirmedData
-        color = '#FF073A'
-        break
-      case tabConstants.recovered:
-        data = recoveredData
-        color = '#216837'
-        break
-      case tabConstants.deceased:
-        data = deceasedData
-        color = '#474C57'
-        break
-      default:
-        data = ''
-        color = ''
-        break
-    }
     return (
-      <div style={{position: 'relative', width: '50%'}} className="bar-chart">
-        <div style={{position: 'absolute', height: '100%'}}>
-          <BarChart width={600} height={300} data={data}>
-            <XAxis hide dataKey="date" />
-            <YAxis
-              hide
-              tickFormatter={DataFormatter}
-              domain={[2010000, 2040708]}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Bar
-              dataKey="count"
-              fill={color}
-              className="label-text"
-              label={{position: 'top', color: 'white'}}
-              barSize={50}
-              barGap={0}
-            />
-          </BarChart>
+      <div className="bar-charts-container">
+        <div className="bar-chart-desktop">
+          <div>
+            <BarChart width={700} height={250} data={confirmedData}>
+              <XAxis
+                // label={{position: 'bottom', color: 'white'}}
+                dataKey="date"
+                tick={{strokeWidth: 1, fill: 'red', fontSize: 10}}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={DateFormatter}
+              />
+              <YAxis hide domain={['auto', 'auto']} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar
+                dataKey="count"
+                fill="#FF073A"
+                className="bar"
+                label={{position: 'top', fill: 'red', fontSize: 10}}
+              />
+            </BarChart>
+          </div>
+        </div>
+        <div className="bar-chart-mobile">
+          <div>
+            <BarChart width={300} height={250} data={confirmedData}>
+              <XAxis
+                // label={{position: 'bottom', color: 'white'}}
+                dataKey="date"
+                tick={{strokeWidth: 1, fill: 'red', fontSize: 10}}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={DateFormatter}
+              />
+              <YAxis hide domain={['auto', 'auto']} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar
+                dataKey="count"
+                fill="#FF073A"
+                className="bar"
+                label={{position: 'top', fill: 'red', fontSize: 10}}
+              />
+            </BarChart>
+          </div>
         </div>
       </div>
     )
   }
 
-  renderLineCharts = () => {
+  renderActiveCasesBarChart = () => {
     const {timelineData} = this.state
-    const confirmedData = timelineData
-      .map(item => ({
-        date: item.date,
-        count: item.confirmed,
-      }))
-      .slice(0, 18)
-
     const activeData = timelineData
       .map(item => ({
         date: item.date,
         count: item.confirmed - (item.recovered + item.deceased),
       }))
       .slice(0, 10)
+    return (
+      <div className="bar-charts-container">
+        <div className="bar-chart-desktop">
+          <div>
+            <BarChart width={700} height={250} data={activeData}>
+              <XAxis
+                dataKey="date"
+                tick={{strokeWidth: 1, fill: '#0A4FA0', fontSize: 10}}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={DateFormatter}
+              />
+              <YAxis hide domain={['auto', 'auto']} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar
+                dataKey="count"
+                fill="#0A4FA0"
+                className="bar"
+                label={{position: 'top', fill: '#0A4FA0', fontSize: 10}}
+                barSize={40}
+              />
+            </BarChart>
+          </div>
+        </div>
+        <div className="bar-chart-mobile">
+          <div>
+            <BarChart width={300} height={250} data={activeData}>
+              <XAxis
+                // label={{position: 'bottom', color: 'white'}}
+                dataKey="date"
+                tick={{strokeWidth: 1, fill: '#0A4FA0', fontSize: 10}}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={DateFormatter}
+              />
+              <YAxis hide domain={['auto', 'auto']} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar
+                dataKey="count"
+                fill="#0A4FA0"
+                className="bar"
+                label={{position: 'top', fill: '#0A4FA0', fontSize: 10}}
+              />
+            </BarChart>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
-    console.log(activeData)
-
+  renderRecoveredCasesBarChart = () => {
+    const {timelineData} = this.state
     const recoveredData = timelineData
       .map(item => ({
         date: item.date,
         count: item.recovered,
       }))
       .slice(0, 10)
+    return (
+      <div className="bar-charts-container">
+        <div className="bar-chart-desktop">
+          <div>
+            <BarChart width={700} height={250} data={recoveredData}>
+              <XAxis
+                dataKey="date"
+                tick={{strokeWidth: 1, fill: '#216837', fontSize: 10}}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={DateFormatter}
+              />
+              <YAxis hide domain={['auto', 'auto']} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar
+                dataKey="count"
+                fill="#216837"
+                className="bar"
+                label={{position: 'top', fill: '#216837', fontSize: 10}}
+                barSize={40}
+              />
+            </BarChart>
+          </div>
+        </div>
+        <div className="bar-chart-mobile">
+          <div>
+            <BarChart width={300} height={250} data={recoveredData}>
+              <XAxis
+                // label={{position: 'bottom', color: 'white'}}
+                dataKey="date"
+                tick={{strokeWidth: 1, fill: '#216837', fontSize: 10}}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={DateFormatter}
+              />
+              <YAxis hide domain={['auto', 'auto']} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar
+                dataKey="count"
+                fill="#216837"
+                className="bar"
+                label={{position: 'top', fill: '#216837', fontSize: 10}}
+              />
+            </BarChart>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
+  renderDeceasedCasesBarChart = () => {
+    const {timelineData} = this.state
     const deceasedData = timelineData
       .map(item => ({
         date: item.date,
         count: item.deceased,
       }))
-      .slice(0, 18)
-
-    const testedData = timelineData
-      .map(item => ({
-        date: item.date,
-        count: item.tested,
-      }))
       .slice(0, 10)
+    return (
+      <div className="bar-charts-container">
+        <div className="bar-chart-desktop">
+          <div>
+            <BarChart width={700} height={250} data={deceasedData}>
+              <XAxis
+                dataKey="date"
+                tick={{strokeWidth: 1, fill: '#474C57', fontSize: 10}}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={DateFormatter}
+              />
+              <YAxis hide domain={['auto', 'auto']} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar
+                dataKey="count"
+                fill="#474C57"
+                className="bar"
+                label={{position: 'top', fill: '#474C57', fontSize: 10}}
+                barSize={40}
+              />
+            </BarChart>
+          </div>
+        </div>
+        <div className="bar-chart-mobile">
+          <div>
+            <BarChart width={300} height={250} data={deceasedData}>
+              <XAxis
+                // label={{position: 'bottom', color: 'white'}}
+                dataKey="date"
+                tick={{strokeWidth: 1, fill: '#474C57', fontSize: 10}}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={DateFormatter}
+              />
+              <YAxis hide domain={['auto', 'auto']} />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar
+                dataKey="count"
+                fill="#474C57"
+                className="bar"
+                label={{position: 'top', fill: '#474C57', fontSize: 10}}
+              />
+            </BarChart>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderBarGraphs = () => {
+    const {status} = this.props
+
+    switch (status) {
+      case tabConstants.confirmed:
+        return this.renderConfirmedCasesBarChart()
+      case tabConstants.active:
+        return this.renderActiveCasesBarChart()
+      case tabConstants.recovered:
+        return this.renderRecoveredCasesBarChart()
+      case tabConstants.deceased:
+        return this.renderDeceasedCasesBarChart()
+
+      default:
+        return null
+    }
+  }
+
+  renderLineCharts = () => {
+    const {timelineData} = this.state
+    const confirmedData = timelineData.map(item => ({
+      date: item.date,
+      count: item.confirmed,
+    }))
+
+    const activeData = timelineData.map(item => ({
+      date: item.date,
+      count: item.confirmed - (item.recovered + item.deceased),
+    }))
+
+    console.log(activeData)
+
+    const recoveredData = timelineData.map(item => ({
+      date: item.date,
+      count: item.recovered,
+    }))
+
+    const deceasedData = timelineData.map(item => ({
+      date: item.date,
+      count: item.deceased,
+    }))
+
+    const testedData = timelineData.map(item => ({
+      date: item.date,
+      count: item.tested,
+    }))
 
     // console.log(testedData)
 
     return (
-      <div testid="lineChartsContainer">
-        <div className="confirmed-cases-line-chart confirmed-bg">
-          <h1 className="confirmed-chart-tag">Confirmed</h1>
-          <div className="line-chart">
-            <LineChart width={800} height={250} data={confirmedData}>
-              <XAxis tick dataKey="date" stroke=" #ff073a" />
-              <YAxis
-                domain={[2030849, 2040708]}
-                tickFormatter={DataFormatter}
-                stroke=" #ff073a"
-              />
-              <Tooltip content={<CustomTooltip />} />
+      <div className="line-chart-container"  testid="lineChartsContainer" */>
+        <>
+          <div className="confirmed-cases-line-chart-mobile confirmed-bg">
+            <h1 className="confirmed-chart-tag">Confirmed</h1>
+            <div className="line-chart">
+              <LineChart width={300} height={250} data={confirmedData}>
+                <XAxis dataKey="date" stroke=" #ff073a" />
+                <YAxis
+                  domain={['auto', 'auto']}
+                  tickFormatter={DataFormatter}
+                  stroke=" #ff073a"
+                />
+                <Tooltip content={<CustomTooltip />} />
 
-              <Line type="monotone" dataKey="count" stroke=" #ff073a" />
-            </LineChart>
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke=" #ff073a"
+                />
+              </LineChart>
+            </div>
           </div>
-        </div>
-        <div className="confirmed-cases-line-chart active-bg">
-          <h1 className="confirmed-chart-tag active">Active</h1>
-          <div className="line-chart">
-            <LineChart
-              width={800}
-              height={250}
-              data={activeData}
-              margin={{top: 5, right: 50, left: 10, bottom: 5}}
-            >
-              <XAxis tick dataKey="date" stroke="#007BFF" />
-              <YAxis
-                domain={[13905, 15200]}
-                tickFormatter={DataFormatter}
-                stroke="#007BFF"
-              />
-              <Tooltip content={<CustomTooltip />} />
+          <div className="confirmed-cases-line-chart-desktop confirmed-bg">
+            <h1 className="confirmed-chart-tag">Confirmed</h1>
+            <div className="line-chart">
+              <LineChart width={800} height={300} data={confirmedData}>
+                <XAxis tick dataKey="date" stroke=" #ff073a" />
+                <YAxis
+                  domain={['auto', 'auto']}
+                  tickFormatter={DataFormatter}
+                  stroke=" #ff073a"
+                />
+                <Tooltip content={<CustomTooltip />} />
 
-              <Line type="monotone" dataKey="count" stroke="#007BFF" />
-            </LineChart>
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke=" #ff073a"
+                />
+              </LineChart>
+            </div>
           </div>
-        </div>
-        <div className="confirmed-cases-line-chart recovered-bg">
-          <h1 className="confirmed-chart-tag recovered">recovered</h1>
-          <div className="line-chart">
-            <LineChart
-              width={800}
-              height={250}
-              data={recoveredData}
-              margin={{top: 5, right: 30, left: 20, bottom: 5}}
-            >
-              <XAxis tick dataKey="date" stroke=" #27A243" />
-              <YAxis
-                domain={[2000817, 2012714]}
-                tickFormatter={DataFormatter}
-                stroke="#27A243"
-              />
-              <Tooltip content={<CustomTooltip class="recovered" />} />
+        </>
+        <>
+          <div className="confirmed-cases-line-chart-mobile active-bg">
+            <h1 className="confirmed-chart-tag active">Active</h1>
+            <div className="line-chart">
+              <LineChart
+                width={300}
+                height={250}
+                data={activeData}
+                margin={{top: 5, right: 50, left: 10, bottom: 5}}
+              >
+                <XAxis tick dataKey="date" stroke="#007BFF" />
+                <YAxis
+                  domain={['auto', 'auto']}
+                  tickFormatter={DataFormatter}
+                  stroke="#007BFF"
+                />
+                <Tooltip content={<CustomTooltip />} />
 
-              <Line type="monotone" dataKey="count" stroke="#27A243" />
-            </LineChart>
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#007BFF"
+                />
+              </LineChart>
+            </div>
           </div>
-        </div>
-        <div className="confirmed-cases-line-chart deceased-bg">
-          <h1 className="confirmed-chart-tag deceased">Deceased</h1>
-          <div className="line-chart">
-            <LineChart
-              width={800}
-              height={250}
-              data={deceasedData}
-              margin={{top: 5, right: 30, left: 20, bottom: 5}}
-            >
-              <XAxis tick dataKey="date" stroke="#6C757D" />
-              <YAxis
-                domain={[13990, 14089]}
-                tickFormatter={DataFormatter}
-                stroke="#6C757D"
-              />
-              <Tooltip content={<CustomTooltip />} />
+          <div className="confirmed-cases-line-chart-desktop active-bg">
+            <h1 className="confirmed-chart-tag active">Active</h1>
+            <div className="line-chart">
+              <LineChart
+                width={800}
+                height={250}
+                data={activeData}
+                margin={{top: 5, right: 50, left: 10, bottom: 5}}
+              >
+                <XAxis tick dataKey="date" stroke="#007BFF" />
+                <YAxis
+                  domain={['auto', 'auto']}
+                  tickFormatter={DataFormatter}
+                  stroke="#007BFF"
+                />
+                <Tooltip content={<CustomTooltip />} />
 
-              <Line type="monotone" dataKey="count" stroke="#6C757D" />
-            </LineChart>
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#007BFF"
+                />
+              </LineChart>
+            </div>
           </div>
-        </div>
-        <div className="confirmed-cases-line-chart tested-bg">
-          <h1 className="confirmed-chart-tag tested">Tested</h1>
-          <div className="line-chart">
-            <LineChart
-              width={800}
-              height={250}
-              data={testedData}
-              margin={{top: 5, right: 30, left: 20, bottom: 5}}
-            >
-              <XAxis tick dataKey="date" stroke="#6C757D" />
-              <YAxis
-                tickFormatter={DataFormatter}
-                stroke="#6C757D"
-                domain={[70000000, 8000000]}
-              />
-              <Tooltip content={<CustomTooltip />} />
+        </>
+        <>
+          <div className="confirmed-cases-line-chart-desktop recovered-bg">
+            <h1 className="confirmed-chart-tag recovered">recovered</h1>
+            <div className="line-chart">
+              <LineChart
+                width={800}
+                height={250}
+                data={recoveredData}
+                margin={{top: 5, right: 30, left: 20, bottom: 5}}
+              >
+                <XAxis tick dataKey="date" stroke=" #27A243" />
+                <YAxis
+                  domain={['auto', 'auto']}
+                  tickFormatter={DataFormatter}
+                  stroke="#27A243"
+                />
+                <Tooltip content={<CustomTooltip class="recovered" />} />
 
-              <Line type="monotone" dataKey="count" stroke="#6C757D" />
-            </LineChart>
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#27A243"
+                />
+              </LineChart>
+            </div>
           </div>
-        </div>
-      </>
+          <div className="confirmed-cases-line-chart-mobile recovered-bg">
+            <h1 className="confirmed-chart-tag recovered">recovered</h1>
+            <div className="line-chart">
+              <LineChart
+                width={300}
+                height={250}
+                data={recoveredData}
+                margin={{top: 5, right: 30, left: 20, bottom: 5}}
+              >
+                <XAxis tick dataKey="date" stroke=" #27A243" />
+                <YAxis
+                  domain={['auto', 'auto']}
+                  tickFormatter={DataFormatter}
+                  stroke="#27A243"
+                />
+                <Tooltip content={<CustomTooltip class="recovered" />} />
+
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#27A243"
+                />
+              </LineChart>
+            </div>
+          </div>
+        </>
+        <>
+          <div className="confirmed-cases-line-chart-mobile deceased-bg">
+            <h1 className="confirmed-chart-tag deceased">Deceased</h1>
+            <div className="line-chart">
+              <LineChart
+                width={300}
+                height={250}
+                data={deceasedData}
+                margin={{top: 5, right: 30, left: 20, bottom: 5}}
+              >
+                <XAxis tick dataKey="date" stroke="#6C757D" />
+                <YAxis
+                  domain={['auto', 'auto']}
+                  tickFormatter={DataFormatter}
+                  stroke="#6C757D"
+                />
+                <Tooltip content={<CustomTooltip />} />
+
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#6C757D"
+                />
+              </LineChart>
+            </div>
+          </div>
+          <div className="confirmed-cases-line-chart-desktop deceased-bg">
+            <h1 className="confirmed-chart-tag deceased">Deceased</h1>
+            <div className="line-chart">
+              <LineChart
+                width={800}
+                height={250}
+                data={deceasedData}
+                margin={{top: 5, right: 30, left: 20, bottom: 5}}
+              >
+                <XAxis tick dataKey="date" stroke="#6C757D" />
+                <YAxis
+                  domain={['auto', 'auto']}
+                  tickFormatter={DataFormatter}
+                  stroke="#6C757D"
+                />
+                <Tooltip content={<CustomTooltip />} />
+
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#6C757D"
+                />
+              </LineChart>
+            </div>
+          </div>
+        </>
+        <>
+          <div className="confirmed-cases-line-chart-desktop tested-bg">
+            <h1 className="confirmed-chart-tag tested">Tested</h1>
+            <div className="line-chart">
+              <LineChart
+                width={800}
+                height={250}
+                data={testedData}
+                margin={{top: 5, right: 30, left: 20, bottom: 5}}
+              >
+                <XAxis tick dataKey="date" stroke="#6C757D" />
+                <YAxis
+                  tickFormatter={DataFormatter}
+                  stroke="#6C757D"
+                  domain={['auto', 'auto']}
+                />
+                <Tooltip content={<CustomTooltip />} />
+
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#6C757D"
+                />
+              </LineChart>
+            </div>
+          </div>
+          <div className="confirmed-cases-line-chart-mobile tested-bg">
+            <h1 className="confirmed-chart-tag tested">Tested</h1>
+            <div className="line-chart">
+              <LineChart
+                width={300}
+                height={250}
+                data={testedData}
+                margin={{top: 5, right: 30, left: 20, bottom: 5}}
+              >
+                <XAxis tick dataKey="date" stroke="#6C757D" />
+                <YAxis
+                  tickFormatter={DataFormatter}
+                  stroke="#6C757D"
+                  domain={['auto', 'auto']}
+                />
+                <Tooltip content={<CustomTooltip />} />
+
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="count"
+                  stroke="#6C757D"
+                />
+              </LineChart>
+            </div>
+          </div>
+        </>
+      </div>
     )
   }
 
@@ -324,7 +650,7 @@ class CovidBargraphs extends Component {
   }
 
   renderLoadingView = () => (
-    <div testid="timelinesDataLoader" className="loader-spinner">
+    <div className="loader-spinner"  testid="timelinesDataLoader"  >
       <Loader height={50} width={50} type="Oval" color="#007BFF" />
     </div>
   )
@@ -332,6 +658,7 @@ class CovidBargraphs extends Component {
   renderSuccessView = () => (
     <>
       {this.renderBarGraphs()}
+      <h1 className="daily-spread-title">Daily Spread Trends</h1>
       {this.renderLineCharts()}
     </>
   )
@@ -373,4 +700,4 @@ class CovidBargraphs extends Component {
   }
 }
 
-export default CovidBargraphs
+export default CovidGraphs

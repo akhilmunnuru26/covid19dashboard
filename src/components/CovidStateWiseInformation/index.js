@@ -1,79 +1,152 @@
+import {Component} from 'react'
 import {Link} from 'react-router-dom'
 
 import './index.css'
 
 import {FcGenericSortingAsc, FcGenericSortingDesc} from 'react-icons/fc'
 
-const CovidStateWiseInformation = props => {
-  const {covidStateWiseData} = props
+class CovidStateWiseDataTable extends Component {
+  state = {covidStatesData: []}
 
-  const ascendingSort = () => covidStateWiseData.sort()
+  componentDidMount() {
+    const {covidStateWiseData} = this.props
+    this.setState({covidStatesData: covidStateWiseData})
+  }
 
-  const descendingSort = () => covidStateWiseData.reverse()
+  ascendingSort = () => {
+    const {covidStateWiseData} = this.props
+    const ascendingSorting = [...covidStateWiseData].sort()
+    this.setState({covidStatesData: ascendingSorting})
+    // console.log(ascendingSorting)
+  }
 
-  return (
-    <div className="table-content">
-      <table testid="stateWiseCovidDataTable" className="info-table">
-        <thead>
-          <tr className="table-header-row">
-            <th className="table-header state-details">
-              <p className="table-headers-title">State/UT</p>
-              <div className="sorting-buttons-container">
-                <button
-                  onClick={ascendingSort}
-                  testid="ascendingSort"
-                  className="sorting-buttons"
-                  type="button"
-                >
-                  <FcGenericSortingAsc className="sort-icon" />
-                </button>
-                <button
-                  onClick={descendingSort}
-                  testid="descendingSort"
-                  className="sorting-buttons"
-                  type="button"
-                >
-                  <FcGenericSortingDesc className="sort-icon" />
-                </button>
-              </div>
-            </th>
-            <th className="table-header table-headers-title">Confirmed</th>
-            <th className="table-header table-headers-title">Active</th>
-            <th className="table-header table-headers-title">Recovered</th>
-            <th className="table-header table-headers-title">Deceased</th>
-            <th className="table-header table-headers-title">Population</th>
-          </tr>
-        </thead>
-        <tbody>
-          {covidStateWiseData.map(state => {
-            const {
-              stateCode,
-              name,
-              confirmed,
-              active,
-              recovered,
-              deceased,
-              population,
-            } = state
-            return (
-              <tr className="state-table-row" key={stateCode}>
-                <td className="state-name data">
-                  <Link className="links" to={`/state/${stateCode}`}>
-                    {name}
-                  </Link>
-                </td>
-                <td className="state-confirmed-count data">{confirmed}</td>
-                <td className="state-active-count data">{active}</td>
-                <td className="state-recovered-count data">{recovered}</td>
-                <td className="state-deceased-count data">{deceased}</td>
-                <td className="state-population-count data">{population}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </div>
-  )
+  descendingSort = () => {
+    const {covidStateWiseData} = this.props
+    const descendingSorting = [...covidStateWiseData].reverse()
+    this.setState({covidStatesData: descendingSorting})
+  }
+
+  render() {
+    const {covidStatesData} = this.state
+
+    return (
+      <div className="table-content">
+        <table testid="stateWiseCovidDataTable" className="info-table">
+          <thead>
+            <tr className="table-header-row">
+              <th className="table-header state-details">
+                <p className="table-headers-title-state">State/UT</p>
+                <div className="sorting-buttons-container">
+                  <button
+                    onClick={this.ascendingSort}
+                    className="sorting-buttons"
+                    type="button"
+                    testid="ascendingSort"
+                  >
+                    <FcGenericSortingAsc className="sort-icon" />
+                  </button>
+                  <button
+                    testid="descendingSort"
+                    onClick={this.descendingSort}
+                    className="sorting-buttons"
+                    type="button"
+                  >
+                    <FcGenericSortingDesc className="sort-icon" />
+                  </button>
+                </div>
+              </th>
+              <th>
+                <p className="table-header table-headers-title-confirmed">
+                  Confirmed
+                </p>
+              </th>
+              <th>
+                <p className="table-header table-headers-title-active">
+                  Active
+                </p>
+              </th>
+              <th>
+                <p className="table-header table-headers-title-recovered">
+                  Recovered
+                </p>
+              </th>
+              <th>
+                <p className="table-header table-headers-title-deceased">
+                  Deceased
+                </p>
+              </th>
+              <th>
+                <p className="table-header table-headers-title-population">
+                  Population
+                </p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {covidStatesData.map(state => {
+              const {
+                stateCode,
+                name,
+                confirmed,
+                active,
+                recovered,
+                deceased,
+                population,
+              } = state
+              return (
+                <tr className="state-table-row" key={stateCode}>
+                  <td className="state-name data">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item">
+                        <Link className="links" to={`/state/${stateCode}`}>
+                          {name}
+                        </Link>
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item state-confirmed-count data">
+                        {confirmed}
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item state-active-count data">
+                        {active}
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item state-recovered-count data">
+                        {recovered}
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item state-deceased-count data">
+                        {deceased}
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item state-population-count data">
+                        {population}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
 }
 
-export default CovidStateWiseInformation
+export default CovidStateWiseDataTable

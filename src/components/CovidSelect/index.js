@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import CovidBargraphs from '../CovidBargraphs'
+import CovidGraphs from '../CovidGraphs'
 
 import './index.css'
 
@@ -12,7 +12,7 @@ const statsStatus = {
 }
 
 class CovidSelect extends Component {
-  state = {status: statsStatus.initial, topDistrictsCases: []}
+  state = {status: statsStatus.confirmed, topDistrictsCases: []}
 
   changeConfirmBgColor = () => {
     const {districtsDataList} = this.props
@@ -91,8 +91,28 @@ class CovidSelect extends Component {
   }
 
   renderTopDistricts = () => {
-    const {topDistrictsCases} = this.state
+    const {topDistrictsCases, status} = this.state
     topDistrictsCases.reverse()
+
+    let highlightedText = ''
+    switch (status) {
+      case statsStatus.confirmed:
+        highlightedText = '-confirmed'
+        break
+      case statsStatus.active:
+        highlightedText = '-active'
+        break
+      case statsStatus.recovered:
+        highlightedText = '-recovered'
+        break
+      case statsStatus.deceased:
+        highlightedText = '-deceased'
+        break
+      default:
+        highlightedText = ''
+        break
+    }
+
     return (
       <ul
         testid="topDistrictsUnorderedList"
@@ -102,8 +122,12 @@ class CovidSelect extends Component {
           const {name, cases} = item
           return (
             <li className="top-district-item" key={name}>
-              <p className="top-district-cases">{cases}</p>
-              <p className="top-district-name">{name}</p>
+              <div className="top-district-item">
+                <p className={`top-district-cases${highlightedText}`}>
+                  {cases}
+                </p>
+                <p className={`top-district-name${highlightedText}`}>{name}</p>
+              </div>
             </li>
           )
         })}
@@ -115,14 +139,6 @@ class CovidSelect extends Component {
     const {status} = this.state
     const {stateCode} = this.props
     // console.log(topDistrictsCases)
-    const highlightConfirmCases =
-      status === statsStatus.confirmed ? 'confirmed-cases' : ''
-    const highlightActiveCases =
-      status === statsStatus.active ? 'active-cases' : ''
-    const highlightRecoveredCases =
-      status === statsStatus.recovered ? 'recovered-cases' : ''
-    const highlightDeceasedCases =
-      status === statsStatus.deceased ? 'deceased-cases' : ''
 
     let changeTextColor = ''
 
@@ -155,7 +171,7 @@ class CovidSelect extends Component {
         <ul className="country-stats-container">
           <li
             onClick={this.changeConfirmBgColor}
-            className={`tab-item ${highlightConfirmCases}`}
+            className="tab-item-confirmed"
             testid="stateSpecificConfirmedCasesContainer"
           >
             <h1 className="tag confirmed-tag">Confirmed</h1>
@@ -170,7 +186,7 @@ class CovidSelect extends Component {
           <li
             testid="stateSpecificActiveCasesContainer"
             onClick={this.changeActiveBgColor}
-            className={`tab-item ${highlightActiveCases}`}
+            className="tab-item-active"
           >
             <p className="tag active-tag">Active</p>
 
@@ -183,9 +199,9 @@ class CovidSelect extends Component {
             <h1 className="count active-tag">{activeCases}</h1>
           </li>
           <li
-            testid="stateSpecificRecoveredCasesContainer"
             onClick={this.changeRecoveredBgColor}
-            className={`tab-item ${highlightRecoveredCases}`}
+            className="tab-item-recovered"
+            testid="stateSpecificRecoveredCasesContainer"
           >
             <p className="tag recovered-tag">Recovered</p>
 
@@ -198,9 +214,9 @@ class CovidSelect extends Component {
             <h1 className="count recovered-tag">{recoveredCases}</h1>
           </li>
           <li
-            testid="stateSpecificDeceasedCasesContainer"
             onClick={this.changeDeceasedBgColor}
-            className={`tab-item ${highlightDeceasedCases}`}
+            className="tab-item-deceased"
+            testid="stateSpecificDeceasedCasesContainer"
           >
             <p className="tag deceased-tag">Deceased</p>
 
@@ -214,8 +230,11 @@ class CovidSelect extends Component {
           </li>
         </ul>
         <h1 className={`heading-tag ${changeTextColor}`}>Top Districts</h1>
-        {this.renderTopDistricts()}
-        {<CovidBargraphs stateCode={stateCode} status={status} />}
+        <div>{this.renderTopDistricts()}</div>
+
+        <div>
+          <CovidGraphs stateCode={stateCode} status={status} />
+        </div>
       </div>
     )
   }

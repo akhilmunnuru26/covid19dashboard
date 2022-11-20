@@ -9,7 +9,13 @@
 .sorting-buttons {
   background-color: transparent;
   border: none;
+  outline: none;
 }
+
+.sorting-buttons:hover {
+  border-bottom: 1px solid #007bff;
+}
+
 .sorting-buttons-container {
   display: flex;
   align-items: center;
@@ -23,18 +29,66 @@
   color: #475569;
 }
 
-.table-headers-title {
+.table-headers-title-confirmed {
   font-size: 16px;
   color: #f9fafc;
 }
+
+.table-headers-title-confirmed:hover {
+  font-size: 16px;
+  color: #ff073a;
+}
+
+.table-headers-title-active {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
+.table-headers-title-active:hover {
+  font-size: 16px;
+  color: #007bff;
+}
+
+.table-headers-title-recovered {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
+.table-headers-title-recovered:hover {
+  font-size: 16px;
+  color: #28a745;
+}
+
+.table-headers-title-deceased {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
+.table-headers-title-deceased:hover {
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.table-headers-title-population {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
+.table-headers-title-population:hover {
+  font-size: 16px;
+  color: #94a3b8;
+}
+
+.table-headers-title-state {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
 .info-table {
   background: #1e1e30;
   border-radius: 12px;
   border: 1px solid #475569;
-  width: 100vw;
   margin-inline: auto;
-  margin-top: 110px;
-  overflow: auto;
 }
 .state-table-row {
   border-collapse: separate;
@@ -87,13 +141,22 @@
   color: #f1f5f9;
 }
 
+.states-count-list-container {
+  padding-left: 0px;
+}
+
+.states-count-list-item {
+  list-style-type: none;
+}
+
+.table-content {
+  overflow-x: auto;
+}
+
 @media screen and (min-width: 768px) {
   .info-table {
     width: 1146px;
-    left: 150px;
-    top: 576px;
     border-radius: 12px;
     border-collapse: collapse;
-    margin-top: 140px;
   }
 }

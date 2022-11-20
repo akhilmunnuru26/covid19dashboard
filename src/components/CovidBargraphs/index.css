@@ -1,8 +1,68 @@
-.confirmed-cases-line-chart {
+::-webkit-scrollbar {
+  display: none;
+}
+.daily-spread-title {
+  font-size: 32px;
+  color: #cbd5e1;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.bar-charts-container {
+  display: flex;
+  justify-content: center;
+}
+
+.bar-chart-desktop {
+  display: none;
+}
+.bar-chart-mobile {
+  display: flex;
+  flex-direction: column;
+}
+
+.confirmed-cases-line-chart-mobile {
   border-radius: 8px;
   padding: 16px;
   margin-top: 24px;
   margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.confirmed-cases-line-chart-desktop {
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .daily-spread-title {
+    font-size: 24px;
+    color: #cbd5e1;
+    text-align: start;
+  }
+  .confirmed-cases-line-chart-mobile {
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    display: none;
+  }
+  .confirmed-cases-line-chart-desktop {
+    display: flex;
+    flex-direction: column;
+  }
+  .bar-chart-mobile {
+    display: none;
+  }
+  .bar-chart-desktop {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .confirmed-bg {
@@ -78,18 +138,13 @@
   margin-top: 48px;
 }
 
-.bar-chart {
-  width: 300px;
-  height: 250px;
-  margin-top: 24px;
-  margin-bottom: 24px;
+.bar-chart-container {
+  display: flex;
+  justify-content: center;
 }
 
 .covid-bar-graphs {
   min-height: 100vh;
-}
-.label-text {
-  color: white !important;
 }
 
 @media screen and (min-width: 768px) {
@@ -98,7 +153,8 @@
     margin-top: 56px;
     margin-bottom: 56px;
   }
-  .covid-bar-graphs {
-    min-height: 100vh;
+  .confirmed-chart-tag {
+    font-size: 16px;
+    text-align: right;
   }
 }

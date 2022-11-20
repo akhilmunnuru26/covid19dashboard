@@ -1,13 +1,14 @@
 import {Component} from 'react'
+import {Link} from 'react-router-dom'
 
 import {BsSearch} from 'react-icons/bs'
+import {BiChevronRightSquare} from 'react-icons/bi'
 
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Footer from '../Footer'
-import ReactSelect from '../ReactSelect'
 
-import CovidStateWiseInformation from '../CovidStateWiseInformation'
+import CovidStateWiseDataTable from '../CovidStateWiseDataTable'
 
 import './index.css'
 
@@ -158,13 +159,6 @@ const statesList = [
   },
 ]
 
-const formatStateList = statesList.map(state => ({
-  stateCode: state.state_code,
-  stateName: state.state_name,
-}))
-
-// console.log(formattedStatesList.length)
-
 const apiStatusConstants = {
   initial: 'INITIAL',
   progress: 'IN_PROGRESS',
@@ -174,7 +168,7 @@ const apiStatusConstants = {
 
 class Home extends Component {
   state = {
-    selected: null,
+    searchInput: '',
     apiStatus: apiStatusConstants.progress,
     covidStateWiseData: '',
   }
@@ -183,10 +177,25 @@ class Home extends Component {
     this.getStateWiseStats()
   }
 
-  handleChange = value => {
+  getFilteredList = () => {}
+
+  handleChange = event => {
     this.setState({
-      selected: value,
+      searchInput: event.target.value,
     })
+  }
+
+  getFilteredData = () => {
+    const {covidStateWiseData, searchInput} = this.state
+    let filteredList = []
+    if (searchInput !== '') {
+      filteredList = covidStateWiseData.filter(
+        state =>
+          state.name.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+          state.stateCode.toLowerCase().startsWith(searchInput.toLowerCase()),
+      )
+    }
+    return filteredList
   }
 
   getCountryWiseStats = array => {
@@ -200,12 +209,12 @@ class Home extends Component {
   renderTotalIndiaCovidCases = () => {
     const {covidStateWiseData} = this.state
 
-    // console.log(covidStateWiseData.reverse())
+    const {confirmed, active, recovered, deceased} = covidStateWiseData[0]
 
-    const totalStateWiseConfirmedCases = covidStateWiseData.map(state =>
+    /* const totalStateWiseConfirmedCases = covidStateWiseData[0].map(state =>
       parseInt(state.confirmed),
     )
-    const totalStateWiseActiveCases = covidStateWiseData.map(state =>
+    const totalStateWiseActiveCases = covidStateWiseData[].map(state =>
       parseInt(state.active),
     )
     const totalStateWiseRecoveredCases = covidStateWiseData.map(state =>
@@ -226,11 +235,15 @@ class Home extends Component {
     )
     const countryDeceasedCases = this.getCountryWiseStats(
       totalStateWiseDeceasedCases,
-    )
+    ) */
     return (
       <div className="covid-select-page">
         <ul className="country-stats-container">
-          <li key="countryWideConfirmedCases" testid="countryWideConfirmedCases" className="tab-item">
+          <li
+            testid="countryWideConfirmedCases"
+            key="countryWideConfirmedCases"
+            className="tab-item-confirmed"
+          >
             <p className="tag confirmed-tag">Confirmed</p>
             <img
               src="https://res.cloudinary.com/dstuhdad3/image/upload/v1668096626/check-mark_1-1_m9ubtj.png"
@@ -238,9 +251,13 @@ class Home extends Component {
               alt="country wide confirmed cases pic"
             />
 
-            <h1 className="count confirmed-tag">{countryConfirmedCases}</h1>
+            <h1 className="count confirmed-tag">{confirmed}</h1>
           </li>
-          <li key="countryWideActiveCases" testid="countryWideActiveCases" className="tab-item ">
+          <li
+            testid="countryWideActiveCases"
+            key="countryWideActiveCases"
+            className="tab-item-active"
+          >
             <p className="tag active-tag">Active</p>
 
             <img
@@ -249,9 +266,13 @@ class Home extends Component {
               alt="country wide active cases pic"
             />
 
-            <h1 className="count active-tag">{countryActiveCases}</h1>
+            <h1 className="count active-tag">{active}</h1>
           </li>
-          <li key="countryWideRecoveredCases" testid="countryWideRecoveredCases" className="tab-item">
+          <li
+            testid="countryWideRecoveredCases"
+            key="countryWideRecoveredCases"
+            className="tab-item-recovered"
+          >
             <p className="tag recovered-tag">Recovered</p>
 
             <img
@@ -260,9 +281,13 @@ class Home extends Component {
               alt="country wide recovered cases pic"
             />
 
-            <h1 className="count recovered-tag">{countryRecoveredCases}</h1>
+            <h1 className="count recovered-tag">{recovered}</h1>
           </li>
-          <li key="countryWideDeceasedCases" testid="countryWideDeceasedCases" className="tab-item ">
+          <li
+            testid="countryWideDeceasedCases"
+            key="countryWideDeceasedCases"
+            className="tab-item-deceased"
+          >
             <p className="tag deceased-tag">Deceased</p>
 
             <img
@@ -271,7 +296,7 @@ class Home extends Component {
               alt="country wide deceased cases pic"
             />
 
-            <h1 className="count deceased-tag">{countryDeceasedCases}</h1>
+            <h1 className="count deceased-tag">{deceased}</h1>
           </li>
         </ul>
       </div>
@@ -299,24 +324,55 @@ class Home extends Component {
   )
 
   renderApiSuccessView = () => {
-    const {covidStateWiseData, selected} = this.state
+    const {searchInput, covidStateWiseData} = this.state
+    const filteredList = this.getFilteredData()
 
     return (
       <div className="home-content">
         <div className="search-box">
           <BsSearch className="search-icon" />
           <div className="input-container">
-            <ReactSelect
-              options={formatStateList}
+            <input
+              placeholder="Enter the State"
+              className="input-element"
+              value={searchInput}
+              type="search"
               onChange={this.handleChange}
-              selected={selected}
-              covidStateWiseData={covidStateWiseData}
             />
           </div>
         </div>
+        <div>
+          {filteredList.length > 0 ? (
+            <ul
+              testid="searchResultsUnorderedList"
+              className="filterlist-container"
+            >
+              {filteredList.map(option => (
+                <li className="option" key={option.stateCode}>
+                  <Link
+                    className="option-item"
+                    to={`/state/${option.stateCode}`}
+                  >
+                    <p className="option-name">{option.name}</p>
 
-        {this.renderTotalIndiaCovidCases()}
-        <CovidStateWiseInformation covidStateWiseData={covidStateWiseData} />
+                    <div className="state-code-container">
+                      <p className="option-state-code">{option.stateCode}</p>
+                      <BiChevronRightSquare className="right-arrow" />
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+
+        <div className="covid-select-card">
+          {this.renderTotalIndiaCovidCases()}
+        </div>
+        <div>
+          <CovidStateWiseDataTable covidStateWiseData={covidStateWiseData} />
+        </div>
+
         <Footer />
       </div>
     )
@@ -363,9 +419,13 @@ class Home extends Component {
       this.setState({
         apiStatus: apiStatusConstants.success,
         covidStateWiseData: resultList,
+        searchInput: '',
       })
     } else {
-      this.setState({apiStatus: apiStatusConstants.failure})
+      this.setState({
+        apiStatus: apiStatusConstants.failure,
+        searchInput: '',
+      })
     }
   }
 

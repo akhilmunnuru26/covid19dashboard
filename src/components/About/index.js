@@ -21,6 +21,7 @@ class About extends Component {
 
   componentDidMount() {
     this.getFaqs()
+    //   this.getLastUpdatedTime()
   }
 
   renderApiViews = () => {
@@ -38,21 +39,21 @@ class About extends Component {
   }
 
   renderSuccessView = () => {
-    const {faqData, lastUpdatedDateTime} = this.state
-    faqData.reverse()
-    const date = new Date(lastUpdatedDateTime)
-    const updatedDate = date.toDateString()
+    const {faqData /* lastUpdatedDateTime */} = this.state
+
+    // const date = new Date(lastUpdatedDateTime)
+    // const updatedDate = date.toDateString()
     return (
       <div>
         <h1 className="about-page-main-heading">About</h1>
-        <p className="last-updated-time">Last update on {updatedDate}</p>
+        {/* <p className="last-updated-time">Last update on {updatedDate}</p> */}
         <h1 className="about-vaccine-distribution">
           COVID-19 vaccines be ready for distribution
         </h1>
 
-        <ul testid="faqsUnorderedList" className="faqs-container">
+        <ul /* testid="faqsUnorderedList" */ className="faqs-container">
           {faqData.map(item => {
-            const {question, answer} = item
+            const {qno, question, answer} = item
             const formattedAnswer = answer.split('<a')[0]
             const urlStartIndex = answer.indexOf('https:')
             const urlLastIndex = answer.lastIndexOf('.org')
@@ -61,7 +62,7 @@ class About extends Component {
               .split('" target')[0]
 
             return (
-              <li className="faq-item" key={question}>
+              <li className="faq-item" key={qno}>
                 <h1 className="faq-question">{question}</h1>
                 <p className="faq-answer">{formattedAnswer}</p>
                 <a className="url" href={url} target="_blank" rel="noreferrer">
@@ -78,26 +79,37 @@ class About extends Component {
   renderFailureView = () => <h1>Hello</h1>
 
   renderLoadingView = () => (
-    <div testid="aboutRouteLoader" className="loader-spinner">
+    <div /* testid="aboutRouteLoader" */ className="loader-spinner">
       <Loader height={50} width={50} type="Oval" color="#007BFF" />
     </div>
   )
 
-  getFaqs = async () => {
-    const faqApiUrl = 'https://apis.ccbp.in/covid19-faqs'
-    const response = await fetch(faqApiUrl)
+  /* getLastUpdatedTime = async () => {
     const apiUrl = `https://apis.ccbp.in/covid19-state-wise-data/`
     const responseObject = await fetch(apiUrl)
-
-    if (response.ok === true) {
-      const data = await response.json()
+    if (responseObject.ok === true) {
       const dataObject = await responseObject.json()
       const stateObject = dataObject.AP
       const lastUpdatedDateTime = stateObject.meta.last_updated
+      this.setState({
+        lastUpdatedDateTime,
+        apiStatus: apiStatusConstants.success,
+      })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
+    }
+  }
+*/
+
+  getFaqs = async () => {
+    const faqApiUrl = 'https://apis.ccbp.in/covid19-faqs'
+    const response = await fetch(faqApiUrl)
+
+    if (response.ok === true) {
+      const data = await response.json()
 
       const {faq} = data
       this.setState({
-        lastUpdatedDateTime,
         faqData: faq,
         apiStatus: apiStatusConstants.success,
       })

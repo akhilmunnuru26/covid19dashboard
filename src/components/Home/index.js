@@ -4,11 +4,13 @@ import {Link} from 'react-router-dom'
 import {BsSearch} from 'react-icons/bs'
 import {BiChevronRightSquare} from 'react-icons/bi'
 
+import {FcGenericSortingAsc, FcGenericSortingDesc} from 'react-icons/fc'
+
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Footer from '../Footer'
 
-import CovidStateWiseDataTable from '../CovidStateWiseDataTable'
+// import CovidStateWiseDataTable from '../CovidStateWiseDataTable'
 
 import './index.css'
 
@@ -171,18 +173,153 @@ class Home extends Component {
     searchInput: '',
     apiStatus: apiStatusConstants.progress,
     covidStateWiseData: '',
+    sortingData: '',
   }
 
   componentDidMount() {
     this.getStateWiseStats()
   }
 
-  getFilteredList = () => {}
+  ascendingSort = () => {
+    const {covidStateWiseData} = this.state
+    const ascendingData = [...covidStateWiseData].sort()
+    this.setState({sortingData: ascendingData})
+  }
+
+  descendingSort = () => {
+    const {covidStateWiseData} = this.state
+    const descendingSorting = [...covidStateWiseData].reverse()
+    this.setState({sortingData: descendingSorting})
+  }
+
+  renderCovidStateWiseDataTable = () => {
+    const {sortingData} = this.state
+
+    return (
+      <div /* testid="stateWiseCovidDataTable" */ className="table-content">
+        <table className="info-table">
+          <thead>
+            <tr className="table-header-row">
+              <th className="table-header state-details">
+                <p className="table-headers-title-state">States/UT</p>
+                <div className="sorting-buttons-container">
+                  <button
+                    onClick={this.ascendingSort}
+                    className="sorting-buttons"
+                    type="button"
+                    //  testid="ascendingSort"
+                  >
+                    <FcGenericSortingAsc className="sort-icon" />
+                  </button>
+                  <button
+                    //  testid="descendingSort"
+                    onClick={this.descendingSort}
+                    className="sorting-buttons"
+                    type="button"
+                  >
+                    <FcGenericSortingDesc className="sort-icon" />
+                  </button>
+                </div>
+              </th>
+              <th>
+                <p className="table-header table-headers-title-confirmed">
+                  Confirmed
+                </p>
+              </th>
+              <th>
+                <p className="table-header table-headers-title-active">
+                  Active
+                </p>
+              </th>
+              <th>
+                <p className="table-header table-headers-title-recovered">
+                  Recovered
+                </p>
+              </th>
+              <th>
+                <p className="table-header table-headers-title-deceased">
+                  Deceased
+                </p>
+              </th>
+              <th>
+                <p className="table-header table-headers-title-population">
+                  Population
+                </p>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortingData.map(state => {
+              const {
+                stateCode,
+                name,
+                confirmed,
+                active,
+                recovered,
+                deceased,
+                population,
+              } = state
+              return (
+                <tr className="state-table-row" key={stateCode}>
+                  <td className="state-name data">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item">
+                        <Link className="links" to={`/state/${stateCode}`}>
+                          {name}
+                        </Link>
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item state-confirmed-count data">
+                        {confirmed}
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item state-active-count data">
+                        {active}
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item state-recovered-count data">
+                        {recovered}
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item state-deceased-count data">
+                        {deceased}
+                      </li>
+                    </ul>
+                  </td>
+                  <td className="">
+                    <ul className="states-count-list-container">
+                      <li className="states-count-list-item state-population-count data">
+                        {population}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
 
   handleChange = event => {
-    this.setState({
-      searchInput: event.target.value,
-    })
+    if (event.target.value !== ' ') {
+      this.setState({
+        searchInput: event.target.value,
+      })
+    }
   }
 
   getFilteredData = () => {
@@ -209,12 +346,12 @@ class Home extends Component {
   renderTotalIndiaCovidCases = () => {
     const {covidStateWiseData} = this.state
 
-    const {confirmed, active, recovered, deceased} = covidStateWiseData[0]
+    // const {confirmed} = covidStateWiseData[0]
 
-    /* const totalStateWiseConfirmedCases = covidStateWiseData[0].map(state =>
+    const totalStateWiseConfirmedCases = covidStateWiseData.map(state =>
       parseInt(state.confirmed),
     )
-    const totalStateWiseActiveCases = covidStateWiseData[].map(state =>
+    const totalStateWiseActiveCases = covidStateWiseData.map(state =>
       parseInt(state.active),
     )
     const totalStateWiseRecoveredCases = covidStateWiseData.map(state =>
@@ -223,7 +360,6 @@ class Home extends Component {
     const totalStateWiseDeceasedCases = covidStateWiseData.map(state =>
       parseInt(state.deceased),
     )
-
     const countryConfirmedCases = this.getCountryWiseStats(
       totalStateWiseConfirmedCases,
     )
@@ -235,12 +371,12 @@ class Home extends Component {
     )
     const countryDeceasedCases = this.getCountryWiseStats(
       totalStateWiseDeceasedCases,
-    ) */
+    )
     return (
       <div className="covid-select-page">
         <ul className="country-stats-container">
           <li
-            testid="countryWideConfirmedCases"
+            // testid="countryWideConfirmedCases"
             key="countryWideConfirmedCases"
             className="tab-item-confirmed"
           >
@@ -251,10 +387,10 @@ class Home extends Component {
               alt="country wide confirmed cases pic"
             />
 
-            <h1 className="count confirmed-tag">{confirmed}</h1>
+            <p className="count confirmed-tag">{countryConfirmedCases}</p>
           </li>
           <li
-            testid="countryWideActiveCases"
+            //  testid="countryWideActiveCases"
             key="countryWideActiveCases"
             className="tab-item-active"
           >
@@ -266,10 +402,10 @@ class Home extends Component {
               alt="country wide active cases pic"
             />
 
-            <h1 className="count active-tag">{active}</h1>
+            <p className="count active-tag">{countryActiveCases}</p>
           </li>
           <li
-            testid="countryWideRecoveredCases"
+            //  testid="countryWideRecoveredCases"
             key="countryWideRecoveredCases"
             className="tab-item-recovered"
           >
@@ -281,10 +417,10 @@ class Home extends Component {
               alt="country wide recovered cases pic"
             />
 
-            <h1 className="count recovered-tag">{recovered}</h1>
+            <p className="count recovered-tag">{countryRecoveredCases}</p>
           </li>
           <li
-            testid="countryWideDeceasedCases"
+            //  testid="countryWideDeceasedCases"
             key="countryWideDeceasedCases"
             className="tab-item-deceased"
           >
@@ -296,7 +432,7 @@ class Home extends Component {
               alt="country wide deceased cases pic"
             />
 
-            <h1 className="count deceased-tag">{deceased}</h1>
+            <p className="count deceased-tag">{countryDeceasedCases}</p>
           </li>
         </ul>
       </div>
@@ -318,13 +454,13 @@ class Home extends Component {
   }
 
   renderLoadingView = () => (
-    <div className="loader-spinner" testid="homeRouteLoader">
+    <div /* testid="homeRouteLoader" */ className="loader-spinner">
       <Loader height={50} width={50} type="Oval" color="#007BFF" />
     </div>
   )
 
   renderApiSuccessView = () => {
-    const {searchInput, covidStateWiseData} = this.state
+    const {searchInput} = this.state
     const filteredList = this.getFilteredData()
 
     return (
@@ -342,35 +478,30 @@ class Home extends Component {
           </div>
         </div>
         <div>
-          {filteredList.length > 0 ? (
+          {searchInput !== '' && filteredList.length > 0 ? (
             <ul
-              testid="searchResultsUnorderedList"
+              //  testid="searchResultsUnorderedList"
               className="filterlist-container"
             >
               {filteredList.map(option => (
-                <li className="option" key={option.stateCode}>
-                  <Link
-                    className="option-item"
-                    to={`/state/${option.stateCode}`}
-                  >
+                <Link className="option" to={`/state/${option.stateCode}`}>
+                  <li className="option-item" key={option.stateCode}>
                     <p className="option-name">{option.name}</p>
 
                     <div className="state-code-container">
                       <p className="option-state-code">{option.stateCode}</p>
                       <BiChevronRightSquare className="right-arrow" />
                     </div>
-                  </Link>
-                </li>
+                  </li>
+                </Link>
               ))}
             </ul>
           ) : null}
         </div>
 
-        <div className="covid-select-card">
-          {this.renderTotalIndiaCovidCases()}
-        </div>
         <div>
-          <CovidStateWiseDataTable covidStateWiseData={covidStateWiseData} />
+          {this.renderTotalIndiaCovidCases()}
+          {this.renderCovidStateWiseDataTable()}
         </div>
 
         <Footer />
@@ -420,6 +551,7 @@ class Home extends Component {
         apiStatus: apiStatusConstants.success,
         covidStateWiseData: resultList,
         searchInput: '',
+        sortingData: resultList,
       })
     } else {
       this.setState({

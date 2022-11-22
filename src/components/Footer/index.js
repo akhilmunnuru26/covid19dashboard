@@ -7,12 +7,10 @@ import './index.css'
 export default function Footer() {
   return (
     <div className="footer-page">
-      <Link to="/" className="links">
-        <div className="footer-logo">
-          <span className="app-logo"> COVID19</span>
-          <span className="span-logo">INDIA</span>
-        </div>
-      </Link>
+      <div className="footer-logo">
+        <h1 className="app-logo">COVID19INDIA</h1>
+      </div>
+
       <p className="motto">
         we stand with everyone fighting on the front lines
       </p>

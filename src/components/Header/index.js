@@ -20,12 +20,13 @@ class Header extends Component {
     return (
       <div>
         <nav className="nav-bar">
-          <Link to="/" className="links">
-            <div className="home-logo-container">
-              <span className="app-logo">COVID19</span>
-              <span className="span-logo">INDIA</span>
-            </div>
-          </Link>
+          <div className="">
+            <Link to="/" className="links">
+              <h1 className="app-logo">
+                COVID19<span className="span-logo">INDIA</span>
+              </h1>
+            </Link>
+          </div>
 
           <div className="mobile-icon">
             <button

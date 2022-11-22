@@ -322,17 +322,16 @@
   text-align: left;
 }
 .option {
-  list-style-type: none;
+  text-decoration: none;
 }
 .option-item {
   display: flex;
   padding: 10px;
-
+  list-style-type: none;
   width: 100%;
   justify-content: space-between;
   align-items: center;
   margin-top: 12px;
-  text-decoration: none;
 }
 
 .option-name:hover {
@@ -488,5 +487,508 @@
   }
   .option-item:hover {
     background-color: #1f1f30;
+  }
+}
+
+/* covid state table css */
+
+.state-info-table {
+  border-collapse: collapse;
+}
+
+.table-header-row {
+  border-bottom: 1px solid #475569;
+}
+
+.sorting-buttons {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.sorting-buttons:hover {
+  border-bottom: 1px solid #007bff;
+}
+
+.sorting-buttons-container {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+}
+
+.sort-icon {
+  font-size: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #475569;
+}
+
+.table-headers-title-confirmed {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
+.table-headers-title-confirmed:hover {
+  font-size: 16px;
+  color: #ff073a;
+}
+
+.table-headers-title-active {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
+.table-headers-title-active:hover {
+  font-size: 16px;
+  color: #007bff;
+}
+
+.table-headers-title-recovered {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
+.table-headers-title-recovered:hover {
+  font-size: 16px;
+  color: #28a745;
+}
+
+.table-headers-title-deceased {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
+.table-headers-title-deceased:hover {
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.table-headers-title-population {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
+.table-headers-title-population:hover {
+  font-size: 16px;
+  color: #94a3b8;
+}
+
+.table-headers-title-state {
+  font-size: 16px;
+  color: #f9fafc;
+}
+
+.info-table {
+  background: #1e1e30;
+  border-radius: 12px;
+  border: 1px solid #475569;
+  margin-inline: auto;
+}
+.state-table-row {
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+.state-details {
+  display: flex;
+  align-items: center;
+}
+.data {
+  font-size: 14px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+.state-name {
+  color: #f9fafc;
+}
+.state-confirmed-count {
+  color: #ff073a;
+  text-align: center;
+}
+.state-active-count {
+  color: #007bff;
+  text-align: center;
+}
+.state-recovered-count {
+  color: #28a745;
+  text-align: center;
+}
+.state-deceased-count {
+  color: #6c757d;
+  text-align: center;
+}
+.state-population-count {
+  color: #94a3b8;
+  text-align: center;
+}
+
+.table-header {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-right: 32px;
+  padding-left: 32px;
+}
+
+.links {
+  text-decoration: none;
+  color: #f1f5f9;
+}
+
+.states-count-list-container {
+  padding-left: 0px;
+}
+
+.states-count-list-item {
+  list-style-type: none;
+}
+
+.table-content {
+  margin-top: 0px;
+  overflow-x: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .info-table {
+    width: 1146px;
+    border-radius: 12px;
+    border-collapse: collapse;
+  }
+  .table-content {
+    margin-top: 0px;
+  }
+}
+
+/* covid select css */
+.covid-select-card {
+  margin-bottom: 0px;
+}
+
+.country-stats-container {
+  padding-left: 0px;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+  margin-bottom: 0px;
+}
+
+.tab-item {
+  list-style-type: none;
+  background-color: transparent;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 140px;
+  width: 140px;
+  border-radius: 8px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
+
+.heading-tag {
+  font-size: 24px;
+  color: #94a3b8;
+}
+
+.confirmed-cases {
+  background-color: #331427;
+}
+.active-cases {
+  background-color: #132240;
+}
+.recovered-cases {
+  background-color: #182829;
+}
+.deceased-cases {
+  background-color: #212230;
+}
+.confirmed-tag {
+  color: #ff073a;
+}
+.active-tag {
+  color: #007bff;
+}
+.recovered-tag {
+  color: #28a745;
+}
+.deceased-tag {
+  color: #6c757d;
+}
+
+.tag {
+  font-size: 12px;
+}
+.country-wise-count-image {
+  height: 24px;
+  width: 24px;
+}
+.check-mark-image-container {
+  text-align: center;
+}
+.count {
+  font-size: 16px;
+  margin-top: 18px;
+}
+
+.top-districts-container {
+  padding-left: 0px;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.top-district-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.top-district-name-confirmed {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.06px;
+  margin-left: 16px;
+}
+.top-district-name-active {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.06px;
+  margin-left: 16px;
+}
+.top-district-name-recovered {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.06px;
+  width: 100%;
+  margin-left: 16px;
+}
+.top-district-name-deceased {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.06px;
+  width: 100%;
+  margin-left: 16px;
+}
+
+.top-district-cases-confirmed {
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 18.75px;
+  font-weight: 500;
+}
+.top-district-cases-active {
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 18.75px;
+  font-weight: 500;
+}
+.top-district-cases-recovered {
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 18.75px;
+  font-weight: 500;
+}
+.top-district-cases-deceased {
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 18.75px;
+  font-weight: 500;
+}
+
+.top-district-cases-deceased:hover {
+  color: #6c757d;
+}
+.top-district-cases-confirmed:hover {
+  color: #ff073a;
+}
+.top-district-cases-active:hover {
+  color: #007bff;
+}
+.top-district-cases-recovered:hover {
+  color: #28a745;
+}
+.top-district-name-deceased:hover {
+  color: #6c757d;
+}
+.top-district-name-confirmed:hover {
+  color: #ff073a;
+}
+.top-district-name-active:hover {
+  color: #007bff;
+}
+.top-district-name-recovered:hover {
+  color: #28a745;
+}
+
+@media screen and (min-width: 768px) {
+  .tab-item {
+    height: 162px;
+    width: 164px;
+    border-radius: 12px;
+    padding-left: 0px;
+  }
+  .tag {
+    font-size: 14px;
+  }
+  .count {
+    font-size: 20px;
+  }
+  .country-wise-count-image {
+    height: 32.48313522338867px;
+    width: 35.21348190307617px;
+    border-radius: 0px;
+  }
+  .country-stats-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+  }
+  .covid-select-page {
+    min-width: 768px;
+  }
+  .top-districts-container {
+    flex-wrap: wrap;
+  }
+  .top-district-item {
+    width: 250px;
+    color: #94a3b8;
+  }
+
+  .top-district-name-confirmed {
+    color: #94a3b8;
+    font-size: 16px;
+    font-weight: 500;
+    width: 135px;
+    line-height: 18.75px;
+  }
+  .top-district-name-active {
+    color: #94a3b8;
+    font-size: 16px;
+    font-weight: 500;
+    width: 135px;
+    line-height: 18.75px;
+  }
+  .top-district-name-recovered {
+    color: #94a3b8;
+    font-size: 16px;
+    font-weight: 500;
+    width: 135px;
+    line-height: 18.75px;
+  }
+  .top-district-name-deceased {
+    color: #94a3b8;
+    font-size: 16px;
+    font-weight: 500;
+    width: 135px;
+    line-height: 18.75px;
+  }
+
+  .top-district-cases-confirmed {
+    color: #94a3b8;
+    font-size: 24px;
+    line-height: 18.75px;
+    font-weight: 500;
+  }
+  .top-district-cases-active {
+    color: #94a3b8;
+    font-size: 24px;
+    line-height: 18.75px;
+    font-weight: 500;
+  }
+  .top-district-cases-recovered {
+    color: #94a3b8;
+    font-size: 24px;
+    line-height: 18.75px;
+    font-weight: 500;
+  }
+  .top-district-cases-deceased {
+    color: #94a3b8;
+    font-size: 24px;
+    line-height: 18.75px;
+    font-weight: 500;
+  }
+
+  .heading-tag {
+    font-size: 32px;
+  }
+  .top-district-cases-deceased:hover {
+    color: #6c757d;
+  }
+  .top-district-cases-confirmed:hover {
+    color: #ff073a;
+  }
+  .top-district-cases-active:hover {
+    color: #007bff;
+  }
+  .top-district-cases-recovered:hover {
+    color: #28a745;
+  }
+  .top-district-name-deceased:hover {
+    color: #6c757d;
+  }
+  .top-district-name-confirmed:hover {
+    color: #ff073a;
+  }
+  .top-district-name-active:hover {
+    color: #007bff;
+  }
+  .top-district-name-recovered:hover {
+    color: #28a745;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .tab-item {
+    height: 232px;
+    width: 264px;
+    border-radius: 12px;
+    padding-left: 0px;
+  }
+  .tag {
+    font-size: 16px;
+  }
+  .count {
+    font-size: 24px;
+  }
+  .country-wise-count-image {
+    height: 32.48313522338867px;
+    width: 35.21348190307617px;
+    border-radius: 0px;
+  }
+  .country-stats-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0px;
+  }
+  .covid-select-page {
+    width: 1146px;
+    padding-top: 50px;
+  }
+  .top-district-name {
+    color: #94a3b8;
+    font-size: 16px;
+    font-weight: 500;
+    width: 150px;
+  }
+
+  .top-district-cases {
+    color: #94a3b8;
+    font-size: 24px;
+    line-height: 19px;
+    font-weight: 500;
+  }
+  .heading-tag {
+    font-size: 32px;
   }
 }

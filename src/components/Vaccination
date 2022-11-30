@@ -1,0 +1,850 @@
+import {Component} from 'react'
+
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  PieChart,
+  Pie,
+  Legend,
+  Cell,
+} from 'recharts'
+
+import {MdHome} from 'react-icons/md'
+import Loader from 'react-loader-spinner'
+import Header from '../Header'
+import Footer from '../Footer'
+import ReactSelect from '../ReactSelect'
+
+import './index.css'
+
+const apiStatusConstants = {
+  inProgress: 'IN_PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
+
+/* const data = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      label: 'First dataset',
+      data: [33, 53, 85, 41, 44, 65],
+      fill: true,
+      backgroundColor: 'rgba(75,192,192,0.2)',
+      borderColor: 'rgba(75,192,192,1)',
+    },
+    {
+      label: 'Second dataset',
+      data: [33, 25, 35, 51, 54, 76],
+      fill: true,
+      borderColor: '#742774',
+      backgroundColor: '#fcb3fc',
+    },
+  ],
+} */
+
+const DataFormatter = number => {
+  if (number > 1000) {
+    const num = Math.round(number / 1000)
+
+    return `${num.toString()}k`
+  }
+  return number.toString()
+}
+
+const tabConstants = {
+  doses: 'DOSES',
+  byAge: 'BY_AGE',
+}
+
+class Vaccination extends Component {
+  state = {
+    tabStatus: tabConstants.doses,
+    vaccinationSites: '',
+    gender: '',
+    vaccine: '',
+    vaccinationInfo: '',
+    vaccinationByAge: '',
+    vaccinationDoneByTime: '',
+    vaccinationDoneByTimeAgeWise: '',
+    apiStatus: apiStatusConstants.inProgress,
+    statesList: apiStatusConstants.initial,
+    districtsList: apiStatusConstants.initial,
+    selectedStateObject: {label: 'Telangana', value: 32},
+    selectedDistrict: '',
+    stateVaccinationData: [],
+  }
+
+  componentDidMount() {
+    this.getStatesInfo()
+    this.getDistrictsData()
+    this.getVaccinationInfo()
+  }
+
+  handleChangeState = value => {
+    this.setState(
+      {
+        selectedStateObject: value,
+      },
+      this.getDistrictsData,
+    )
+  }
+
+  handleChangeDistrict = value => {
+    this.setState({
+      selectedDistrict: value,
+    })
+  }
+
+  toggleByAges = () => {
+    this.setState({tabStatus: tabConstants.byAge})
+  }
+
+  toggleByDoses = () => {
+    this.setState({tabStatus: tabConstants.doses})
+  }
+
+  renderTrendsByDoses = () => {
+    const {vaccinationDoneByTime} = this.state
+
+    return (
+      <div>
+        <div className="desktop-area-chart">
+          <AreaChart
+            width={900}
+            height={400}
+            data={vaccinationDoneByTime}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <XAxis dataKey="label" />
+            <YAxis tickFormatter={DataFormatter} />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="dose1"
+              stroke="#37C62B"
+              fill="#233323"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="dose2"
+              stroke="#FCEA4E"
+              strokeWidth={2}
+              fill="#3E4226"
+            />
+          </AreaChart>
+        </div>
+        <div className="mobile-area-chart">
+          <AreaChart
+            width={300}
+            height={200}
+            data={vaccinationDoneByTime}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <XAxis dataKey="label" />
+            <YAxis tickFormatter={DataFormatter} />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="dose1"
+              stroke="#37C62B"
+              fill="#233323"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="dose2"
+              stroke="#FCEA4E"
+              strokeWidth={2}
+              fill="#3E4226"
+            />
+          </AreaChart>
+        </div>
+      </div>
+    )
+  }
+
+  renderTrendsByAges = () => {
+    const {vaccinationDoneByTimeAgeWise} = this.state
+    return (
+      <div>
+        <div className="desktop-area-chart">
+          <AreaChart
+            width={900}
+            height={400}
+            data={vaccinationDoneByTimeAgeWise}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <XAxis dataKey="label" />
+            <YAxis tickFormatter={DataFormatter} />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="age12To14"
+              stroke="#37C62B"
+              fill="#233323"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="age15To17"
+              stroke="#FCEA4E"
+              fill="#3E4226"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="age18To45"
+              stroke="#A226DC"
+              fill="#2E1E30"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="age45To60"
+              stroke="rgba(75,192,192,1)"
+              fill="rgba(75,192,192,1)"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="age60Above"
+              stroke="#8884d8"
+              strokeWidth={2}
+              fill="#3E4226"
+            />
+          </AreaChart>
+        </div>
+        <div className="mobile-area-chart">
+          <AreaChart
+            width={300}
+            height={250}
+            data={vaccinationDoneByTimeAgeWise}
+            margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0,
+            }}
+          >
+            <XAxis dataKey="label" />
+            <YAxis tickFormatter={DataFormatter} />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="age12To14"
+              stroke="#37C62B"
+              fill="#233323"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="age15To17"
+              stroke="#FCEA4E"
+              fill="#3E4226"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="age18To45"
+              stroke="#A226DC"
+              fill="#2E1E30"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="age45To60"
+              stroke="rgba(75,192,192,1)"
+              fill="rgba(75,192,192,1)"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="age60Above"
+              stroke="#8884d8"
+              strokeWidth={2}
+              fill="#3E4226"
+            />
+          </AreaChart>
+        </div>
+      </div>
+    )
+  }
+
+  renderPieChartByAge = () => {
+    const {vaccinationByAge} = this.state
+    const formattedData = [
+      {
+        name: 'Age 18 To 45',
+        count: vaccinationByAge.vac_18_45,
+      },
+      {
+        name: 'Age 45 To 60',
+        count: vaccinationByAge.vac_45_60,
+      },
+      {
+        name: 'Age 60 Above',
+        count: vaccinationByAge.above_60,
+      },
+    ]
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A3DF9F']
+    const RADIAN = Math.PI / 180
+    const renderCustomizedLabel = ({
+      cx,
+      cy,
+      midAngle,
+      innerRadius,
+      outerRadius,
+      percent,
+    }) => {
+      const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+      const x = cx + radius * Math.cos(-midAngle * RADIAN)
+      const y = cy + radius * Math.sin(-midAngle * RADIAN)
+
+      return (
+        <text
+          x={x}
+          y={y}
+          fill="white"
+          textAnchor={x > cx ? 'start' : 'end'}
+          dominantBaseline="central"
+        >
+          {`${(percent * 100).toFixed(0)}%`}
+        </text>
+      )
+    }
+    return (
+      <div className="pie-chart-container">
+        <div className="pie-graph-container">
+          <h1 className="trends-title">Vaccination by Age</h1>
+          <div className="mobile-area-chart">
+            <PieChart width={300} height={300}>
+              <Pie
+                data={formattedData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={renderCustomizedLabel}
+                fill="#8884d8"
+                dataKey="count"
+              >
+                {formattedData.map((entry, index) => (
+                  <Cell key="cell" fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Legend
+                iconType="circle"
+                layout="horizontal"
+                verticalAlign="bottom"
+                align="center"
+              />
+              <Tooltip />
+            </PieChart>
+          </div>
+          <div className="desktop-area-chart">
+            <PieChart width={400} height={400}>
+              <Pie
+                data={formattedData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={renderCustomizedLabel}
+                fill="#8884d8"
+                dataKey="count"
+              >
+                {formattedData.map((entry, index) => (
+                  <Cell key="cell" fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Legend
+                iconType="circle"
+                layout="horizontal"
+                verticalAlign="bottom"
+                align="center"
+              />
+              <Tooltip />
+            </PieChart>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderVaccinationGraphViews = () => {
+    const {tabStatus} = this.state
+    switch (tabStatus) {
+      case tabConstants.doses:
+        return this.renderTrendsByDoses()
+      case tabConstants.byAge:
+        return this.renderTrendsByAges()
+      default:
+        return null
+    }
+  }
+
+  renderPieChartByGender = () => {
+    const {vaccine, gender} = this.state
+
+    return (
+      <div className="pie-chart-container">
+        <div className="pie-graph-container">
+          <h1 className="trends-title">Vaccination Category</h1>
+
+          <div className="mobile-area-chart">
+            <PieChart height={300} width={300}>
+              <Pie
+                cx="50%"
+                cy="40%"
+                data={gender}
+                startAngle={0}
+                endAngle={180}
+                innerRadius="40%"
+                dataKey="count"
+              >
+                <Cell name="male" fill="#F54394" />
+                <Cell name="female" fill="#5A8DEE" />
+                <Cell name="others" fill="#FF9800" />
+              </Pie>
+              <Legend
+                iconType="circle"
+                layout="horizontal"
+                verticalAlign="middle"
+                align="center"
+              />
+              <Tooltip />
+            </PieChart>
+          </div>
+          <div className="desktop-area-chart">
+            <PieChart height={400} width={400}>
+              <Pie
+                cx="50%"
+                cy="40%"
+                data={gender}
+                startAngle={0}
+                endAngle={180}
+                innerRadius="40%"
+                dataKey="count"
+                margin={0}
+              >
+                <Cell name="male" fill="#F54394" />
+                <Cell name="female" fill="#5A8DEE" />
+                <Cell name="others" fill="#FF9800" />
+              </Pie>
+              <Legend
+                iconType="circle"
+                layout="horizontal"
+                verticalAlign="middle"
+                align="center"
+              />
+              <Tooltip />
+            </PieChart>
+          </div>
+
+          <div className="desktop-area-chart">
+            <PieChart height={400} width={400}>
+              <Pie
+                cx="50%"
+                cy="40%"
+                data={vaccine}
+                startAngle={0}
+                endAngle={180}
+                innerRadius="40%"
+                dataKey="count"
+                margin={0}
+              >
+                <Cell name="covisheild" fill="#007CC3" />
+                <Cell name="sputnik" fill="#FF9800" />
+                <Cell name="covaxin" fill="#7AC142" />
+              </Pie>
+              <Legend
+                iconType="circle"
+                layout="horizontal"
+                verticalAlign="middle"
+                align="center"
+              />
+              <Tooltip />
+            </PieChart>
+          </div>
+          <div className="mobile-area-chart">
+            <PieChart height={300} width={300}>
+              <Pie
+                cx="50%"
+                cy="40%"
+                data={vaccine}
+                startAngle={0}
+                endAngle={180}
+                innerRadius="40%"
+                outerRadius="70%"
+                dataKey="count"
+                margin={0}
+              >
+                <Cell name="covisheild" fill="#007CC3" />
+                <Cell name="sputnik" fill="#FF9800" />
+                <Cell name="covaxin" fill="#7AC142" />
+              </Pie>
+              <Legend
+                iconType="circle"
+                layout="horizontal"
+                verticalAlign="middle"
+                align="center"
+              />
+              <Tooltip />
+            </PieChart>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  renderApiSuccessView = () => {
+    const {
+      districtsList,
+      statesList,
+      selectedStateObject,
+      vaccinationSites,
+      vaccinationInfo,
+      tabStatus,
+      stateVaccinationData,
+    } = this.state
+    const {label, value} = selectedStateObject
+
+    //  console.log(stateVaccinationData)
+
+    const stateDataList = stateVaccinationData.find(
+      item => item.id === `${value}`,
+    )
+
+    const stateInfo = stateDataList !== undefined ? stateDataList : ''
+    //  console.log(stateInfo)
+
+    const isActiveDoses =
+      tabStatus === tabConstants.doses ? 'active-graph-button' : ''
+    const isActiveAges =
+      tabStatus === tabConstants.byAge ? 'active-graph-button' : ''
+
+    /* const currentStateName = statesList.find(
+      state => state.value === selectedStateId,
+    )
+    console.log(currentStateName)
+    // const {label} = currentStateName */
+    /*  */
+
+    const {govt, total, pvt} = vaccinationSites
+
+    const formattedVaccinationInfo = {
+      dose1: vaccinationInfo.tot_dose_1,
+      dose2: vaccinationInfo.tot_dose_2,
+      totalDoses: vaccinationInfo.total_doses,
+    }
+    const {dose1, dose2, totalDoses} = formattedVaccinationInfo
+
+    return (
+      <div className="content-card">
+        <div className="home-title-container">
+          <MdHome color="#CBD5E1" className="home-icon" />
+          <h1 className="country-state-titles">India/{label}</h1>
+        </div>
+        <div className="react-select-container">
+          <ReactSelect
+            onChange={this.handleChangeState}
+            options={statesList}
+            placeholder="Select State"
+            selected={value}
+          />
+          <ReactSelect
+            onChange={this.handleChangeDistrict}
+            options={districtsList}
+            placeholder="Select District"
+          />
+        </div>
+        <div className="vaccination-tab">
+          <div className="vaccination-sites-container">
+            <div className="logo-header-container">
+              <div className="vaccination-logo-container">
+                <img
+                  src="https://res.cloudinary.com/dstuhdad3/image/upload/v1669365193/Vector_kkvkqz.png"
+                  alt="vaccination-sites"
+                  className=""
+                />
+              </div>
+              <div>
+                <p className="site-heading">{stateInfo.title}</p>
+                <h1 className="sites-total-count">
+                  {stateInfo.totalVaccinated}
+                </h1>
+              </div>
+            </div>
+            <ul className="sites-list-container">
+              <li className="sites">
+                <p className="sites-label">Partial Vaccinated</p>
+                <p className="sites-count">{stateInfo.partialVaccinated}</p>
+              </li>
+              <li className="sites">
+                <p className="sites-label">Precaution Dose</p>
+                <p className="sites-count">{stateInfo.precautionDose}</p>
+              </li>
+              <li className="sites">
+                <p className="sites-label">Today</p>
+                <p className="sites-count">{stateInfo.today}</p>
+              </li>
+            </ul>
+          </div>
+
+          <div className="vaccination-sites-container">
+            <div className="logo-header-container">
+              <div className="vaccination-logo-container">
+                <img
+                  src="https://res.cloudinary.com/dstuhdad3/image/upload/v1669365193/Vector_kkvkqz.png"
+                  alt="vaccination-sites"
+                  className=""
+                />
+              </div>
+              <div>
+                <p className="site-heading">Site Conducting Vaccination</p>
+                <h1 className="sites-total-count">{total}</h1>
+              </div>
+            </div>
+            <ul className="sites-list-container">
+              <li className="sites">
+                <p className="sites-label">Government</p>
+                <p className="sites-count">{govt}</p>
+              </li>
+              <li className="sites">
+                <p className="sites-label">Private</p>
+                <p className="sites-count">{pvt}</p>
+              </li>
+            </ul>
+          </div>
+          <div className="vaccination-sites-container">
+            <div className="logo-header-container">
+              <div className="vaccination-logo-container">
+                <img
+                  src="https://res.cloudinary.com/dstuhdad3/image/upload/v1669367199/Vector_2_wgtb4u.png"
+                  alt="vaccination-doses"
+                  className=""
+                />
+              </div>
+              <div>
+                <p className="site-heading">Total Vaccination Doses</p>
+                <h1 className="sites-total-count">{totalDoses}</h1>
+              </div>
+            </div>
+            <ul className="sites-list-container">
+              <li className="sites">
+                <p className="sites-label">Dose 1</p>
+                <p className="sites-count">{dose1}</p>
+              </li>
+              <li className="sites">
+                <p className="sites-label">Dose 2</p>
+                <p className="sites-count">{dose2}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="graph-card">
+          <div className="area-graph-container">
+            <h1 className="trends-title">Vaccination Trends</h1>
+
+            <button
+              className={`graph-buttons ${isActiveDoses}`}
+              onClick={this.toggleByDoses}
+              type="button"
+            >
+              By Doses
+            </button>
+            <button
+              className={`graph-buttons ${isActiveAges}`}
+              onClick={this.toggleByAges}
+              type="button"
+            >
+              By Age
+            </button>
+
+            {this.renderVaccinationGraphViews()}
+          </div>
+        </div>
+        <div className="pie-charts-container">
+          <div>{this.renderPieChartByGender()}</div>
+          <div>{this.renderPieChartByAge()}</div>
+        </div>
+      </div>
+    )
+  }
+
+  renderApiLoadingView = () => (
+    <div /* testid="timelinesDataLoader" */ className="loader-spinner">
+      <Loader height={50} width={50} type="Oval" color="#007BFF" />
+    </div>
+  )
+
+  renderApiFailureView = () => <h1>Failure View</h1>
+
+  renderApiViews = () => {
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case apiStatusConstants.success:
+        return this.renderApiSuccessView()
+      case apiStatusConstants.inProgress:
+        return this.renderApiLoadingView()
+      case apiStatusConstants.failure:
+        return this.renderApiFailureView()
+      default:
+        return null
+    }
+  }
+
+  getVaccinationInfo = async () => {
+    const apiUrl = 'https://apis.ccbp.in/covid19-vaccination-data/'
+    const response = await fetch(apiUrl)
+    if (response.ok === true) {
+      const data = await response.json()
+
+      //  console.log(data)
+
+      const {
+        topBlock,
+        vaccinationByAge,
+        vaccinationDoneByTime,
+        vaccinationDoneByTimeAgeWise,
+        getBeneficiariesGroupBy,
+      } = data
+
+      const formattedGetBeneficiariesData = getBeneficiariesGroupBy.map(
+        item => ({
+          id: item.id ? item.id : '',
+          partialVaccinated: item.partial_vaccinated
+            ? item.partial_vaccinated
+            : '',
+          precautionDose: item.precaution_dose ? item.precaution_dose : '',
+          stateId: item.state_id ? item.state_id : '',
+          stateName: item.state_name ? item.state_name : '',
+          title: item.title ? item.title : '',
+          today: item.today ? item.today : '',
+          totalVaccinated: item.total ? item.total : '',
+          totallyVaccinated: item.totally_vaccinated
+            ? item.totally_vaccinated
+            : '',
+        }),
+      )
+
+      const updatedVaccinationDoneByTime = vaccinationDoneByTime.map(item => ({
+        label: item.label,
+        dose1: item.dose_one,
+        dose2: item.dose_two,
+      }))
+      const updatedVaccinationTimeByAge = vaccinationDoneByTimeAgeWise.map(
+        item => ({
+          label: item.label,
+          age12To14: item.vac_12_14,
+          age15To17: item.vac_15_17,
+          age18To45: item.vac_18_45,
+          age45To60: item.vac_45_60,
+          age60Above: item.vac_60_above,
+        }),
+      )
+
+      const {sites, vaccination} = topBlock
+
+      const gender = [
+        {male: vaccination.male, count: vaccination.male},
+        {female: vaccination.female, count: vaccination.female},
+        {others: vaccination.others, count: vaccination.others},
+      ]
+
+      const vaccine = [
+        {covishield: vaccination.covishield, count: vaccination.covishield},
+        {sputnik: vaccination.sputnik, count: vaccination.sputnik},
+        {covaxin: vaccination.covaxin, count: vaccination.covaxin},
+      ]
+
+      this.setState({
+        vaccinationSites: sites,
+        vaccinationInfo: vaccination,
+        vaccinationByAge,
+        vaccine,
+        gender,
+        vaccinationDoneByTimeAgeWise: updatedVaccinationTimeByAge,
+        vaccinationDoneByTime: updatedVaccinationDoneByTime,
+        apiStatus: apiStatusConstants.success,
+        stateVaccinationData: formattedGetBeneficiariesData,
+      })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
+    }
+  }
+
+  getDistrictsData = async () => {
+    const {selectedStateObject} = this.state
+    const {value} = selectedStateObject
+
+    const apiUrl = `https://apis.ccbp.in/covid19-districts-data/${value}`
+    const districtsResponse = await fetch(apiUrl)
+    if (districtsResponse.ok === true) {
+      const districtObject = await districtsResponse.json()
+      const {districts} = districtObject
+      const formattedData = districts.map(item => ({
+        value: item.district_id,
+        label: item.district_name,
+      }))
+
+      this.setState({
+        districtsList: formattedData,
+        apiStatus: apiStatusConstants.success,
+      })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
+    }
+  }
+
+  getStatesInfo = async () => {
+    const statesApiUrl = 'https://apis.ccbp.in/covid19-state-ids'
+    const stateResponse = await fetch(statesApiUrl)
+
+    if (stateResponse.ok === true) {
+      const statesData = await stateResponse.json()
+      const {states} = statesData
+
+      const formattedStates = states.map(item => ({
+        value: item.state_id,
+        label: item.state_name,
+      }))
+      this.setState({
+        apiStatus: apiStatusConstants.success,
+        statesList: formattedStates,
+      })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
+    }
+  }
+
+  render() {
+    return (
+      <div className="vaccination-page">
+        <Header />
+        {this.renderApiViews()}
+        <Footer />
+      </div>
+    )
+  }
+}
+
+export default Vaccination

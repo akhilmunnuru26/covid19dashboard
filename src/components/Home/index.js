@@ -9,6 +9,7 @@ import {FcGenericSortingAsc, FcGenericSortingDesc} from 'react-icons/fc'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Footer from '../Footer'
+// import StateItem from '../StateItem'
 
 // import CovidStateWiseDataTable from '../CovidStateWiseDataTable'
 
@@ -183,12 +184,17 @@ class Home extends Component {
   ascendingSort = () => {
     const {covidStateWiseData} = this.state
     const ascendingData = [...covidStateWiseData].sort()
+
     this.setState({sortingData: ascendingData})
   }
 
   descendingSort = () => {
     const {covidStateWiseData} = this.state
-    const descendingSorting = [...covidStateWiseData].reverse()
+    const descendingSorting = [...covidStateWiseData]
+    descendingSorting.sort((a, b) =>
+      a.name.toUpperCase() > b.name.toUpperCase() ? -1 : 1,
+    )
+
     this.setState({sortingData: descendingSorting})
   }
 
@@ -262,48 +268,37 @@ class Home extends Component {
               return (
                 <tr className="state-table-row" key={stateCode}>
                   <td className="state-name data">
-                    <ul className="states-count-list-container">
-                      <li className="states-count-list-item">
-                        <Link className="links" to={`/state/${stateCode}`}>
-                          {name}
-                        </Link>
-                      </li>
-                    </ul>
+                    <Link
+                      className="links states-count-list-item"
+                      to={`/state/${stateCode}`}
+                    >
+                      {name}
+                    </Link>
                   </td>
                   <td className="">
-                    <ul className="states-count-list-container">
-                      <li className="states-count-list-item state-confirmed-count data">
-                        {confirmed}
-                      </li>
-                    </ul>
+                    <li className="states-count-list-item state-confirmed-count data">
+                      {confirmed}
+                    </li>
                   </td>
                   <td className="">
-                    <ul className="states-count-list-container">
-                      <li className="states-count-list-item state-active-count data">
-                        {active}
-                      </li>
-                    </ul>
+                    <li className="states-count-list-item state-active-count data">
+                      {active}
+                    </li>
                   </td>
                   <td className="">
-                    <ul className="states-count-list-container">
-                      <li className="states-count-list-item state-recovered-count data">
-                        {recovered}
-                      </li>
-                    </ul>
+                    <li className="states-count-list-item state-recovered-count data">
+                      {recovered}
+                    </li>
                   </td>
                   <td className="">
-                    <ul className="states-count-list-container">
-                      <li className="states-count-list-item state-deceased-count data">
-                        {deceased}
-                      </li>
-                    </ul>
+                    <li className="states-count-list-item state-deceased-count data">
+                      {deceased}
+                    </li>
                   </td>
                   <td className="">
-                    <ul className="states-count-list-container">
-                      <li className="states-count-list-item state-population-count data">
-                        {population}
-                      </li>
-                    </ul>
+                    <li className="states-count-list-item state-population-count data">
+                      {population}
+                    </li>
                   </td>
                 </tr>
               )
@@ -351,6 +346,8 @@ class Home extends Component {
     const totalStateWiseConfirmedCases = covidStateWiseData.map(state =>
       parseInt(state.confirmed),
     )
+    // console.log(totalStateWiseConfirmedCases)
+
     const totalStateWiseActiveCases = covidStateWiseData.map(state =>
       parseInt(state.active),
     )
@@ -390,7 +387,7 @@ class Home extends Component {
             <p className="count confirmed-tag">{countryConfirmedCases}</p>
           </li>
           <li
-            //  testid="countryWideActiveCases"
+            // testid="countryWideActiveCases"
             key="countryWideActiveCases"
             className="tab-item-active"
           >
@@ -405,7 +402,7 @@ class Home extends Component {
             <p className="count active-tag">{countryActiveCases}</p>
           </li>
           <li
-            //  testid="countryWideRecoveredCases"
+            // testid="countryWideRecoveredCases"
             key="countryWideRecoveredCases"
             className="tab-item-recovered"
           >
@@ -420,7 +417,7 @@ class Home extends Component {
             <p className="count recovered-tag">{countryRecoveredCases}</p>
           </li>
           <li
-            //  testid="countryWideDeceasedCases"
+            // testid="countryWideDeceasedCases"
             key="countryWideDeceasedCases"
             className="tab-item-deceased"
           >

@@ -1,21 +1,10 @@
 import {Component} from 'react'
-import {
-  LineChart,
-  XAxis,
-  YAxis,
-  // CartesianGrid,
-  Tooltip,
-  // Legend,
-  Line,
-  BarChart,
-  Bar,
-} from 'recharts'
+import {LineChart, XAxis, YAxis, Tooltip, Line, BarChart, Bar} from 'recharts'
 
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
-// import CovidSelect from '../CovidSelect'
+
 import Footer from '../Footer'
-// import CovidGraphs from '../CovidGraphs'
 
 import './index.css'
 
@@ -69,146 +58,219 @@ const statesList = [
   {
     state_code: 'AN',
     state_name: 'Andaman and Nicobar Islands',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669193351/Group_7362_jvfzwe.png',
   },
   {
     state_code: 'AP',
     state_name: 'Andhra Pradesh',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669198618/Group_7354_ahzhe5.png',
   },
   {
     state_code: 'AR',
     state_name: 'Arunachal Pradesh',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189129/Group_7340_lutow2.png',
   },
   {
     state_code: 'AS',
     state_name: 'Assam',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189208/Group_7341_ldt7z9.png',
   },
   {
     state_code: 'BR',
     state_name: 'Bihar',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669188523/Group_7335_d52ksq.png',
   },
   {
     state_code: 'CH',
     state_name: 'Chandigarh',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669193282/Group_7361_pihty5.png',
   },
   {
     state_code: 'CT',
     state_name: 'Chhattisgarh',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189664/Group_7353_s9fraj.png',
   },
   {
     state_code: 'DN',
     state_name: 'Dadra and Nagar Haveli and Daman and Diu',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669193427/Group_7357_wgzlfw.png',
   },
   {
     state_code: 'DL',
     state_name: 'Delhi',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669193619/Group_7358_vp3j10.png',
   },
   {
     state_code: 'GA',
     state_name: 'Goa',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189272/Group_7349_tqbvml.png',
   },
   {
     state_code: 'GJ',
     state_name: 'Gujarat',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669188680/Group_7337_xe3h4r.png',
   },
   {
     state_code: 'HR',
     state_name: 'Haryana',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669188114/Group_7332_xmehql.png',
   },
   {
     state_code: 'HP',
     state_name: 'Himachal Pradesh',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669187818/Group_7364_vfmxnt.png',
   },
   {
     state_code: 'JK',
     state_name: 'Jammu and Kashmir',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669187622/Group_7328_ecgwgm.png',
   },
   {
     state_code: 'JH',
     state_name: 'Jharkhand',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669188892/Group_7342_qyrskh.png',
   },
   {
     state_code: 'KA',
     state_name: 'Karnataka',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189909/Group_7339_y4su0h.png',
   },
   {
     state_code: 'KL',
     state_name: 'Kerala',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669193007/Group_7355_k9apjl.png',
   },
   {
     state_code: 'LA',
     state_name: 'Ladakh',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669193711/Group_7363_a26cnl.png',
   },
   {
     state_code: 'LD',
     state_name: 'Lakshadweep',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669193497/Group_7359_ymk2ha.png',
   },
   {
     state_code: 'MH',
     state_name: 'Maharashtra',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189795/Group_7350_sjng1i.png',
   },
   {
     state_code: 'MP',
     state_name: 'Madhya Pradesh',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669188608/Group_7336_evkuxw.png',
   },
   {
     state_code: 'MN',
     state_name: 'Manipur',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189466/Group_7346_u54t1x.png',
   },
   {
     state_code: 'ML',
     state_name: 'Meghalaya',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189331/Group_7344_ak3nme.png',
   },
   {
     state_code: 'MZ',
     state_name: 'Mizoram',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189523/Group_7347_artrgs.png',
   },
   {
     state_code: 'NL',
     state_name: 'Nagaland',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189410/Group_7345_lh8n3h.png',
   },
   {
     state_code: 'OR',
     state_name: 'Odisha',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189732/Group_7348_i64lhi.png',
   },
   {
     state_code: 'PY',
     state_name: 'Puducherry',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669193563/Group_7360_fiarmc.png',
   },
   {
     state_code: 'PB',
     state_name: 'Punjab',
+    imageUrl:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669187881/Group_7330_v0b1rc.png',
   },
   {
     state_code: 'RJ',
     state_name: 'Rajasthan',
+    imageUrl:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669188292/Group_7333_amdond.png',
   },
   {
     state_code: 'SK',
     state_name: 'Sikkim',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189044/Group_7338_fjipxm.png',
   },
   {
     state_code: 'TN',
     state_name: 'Tamil Nadu',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669193116/Group_7356_arksps.png',
   },
   {
     state_code: 'TG',
     state_name: 'Telangana',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189848/Group_7351_bktnjm.png',
   },
   {
     state_code: 'TR',
     state_name: 'Tripura',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669189589/Group_7352_i4akoo.png',
   },
   {
     state_code: 'UP',
     state_name: 'Uttar Pradesh',
+    imageUrl:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669188371/Group_7334_ll7tyd.png',
   },
   {
     state_code: 'UT',
+
+    imageUrl:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669187965/Group_7331_a3gmmz.png',
     state_name: 'Uttarakhand',
   },
   {
     state_code: 'WB',
     state_name: 'West Bengal',
+    image_url:
+      'https://res.cloudinary.com/dstuhdad3/image/upload/v1669188956/Group_7343_lbt7sx.png',
   },
 ]
 
@@ -239,7 +301,6 @@ class StateSpecificRoute extends Component {
   changeConfirmBgColor = () => {
     const {specificStateData} = this.state
     const {districtsDataList} = specificStateData
-    // console.log(districtsDataList)
     const topResultList = []
 
     districtsDataList.forEach(item => {
@@ -348,13 +409,13 @@ class StateSpecificRoute extends Component {
 
     return (
       <ul
-        //  testid="topDistrictsUnorderedList"
+        // testid="topDistrictsUnorderedList"
         className="top-districts-container"
       >
         {topDistrictsCases.map(item => {
           const {name, cases} = item
           return (
-            <li className="top-district-item" key={name}>
+            <li className="top-district-list-item" key={name}>
               <div className="top-district-item">
                 <p className={`top-district-cases${highlightedText}`}>
                   {cases}
@@ -392,22 +453,44 @@ class StateSpecificRoute extends Component {
         break
     }
 
+    const bgColor1 =
+      status === statsStatus.confirmed ? 'on-click-confirmed-tab' : ''
+    const bgColor2 = status === statsStatus.active ? 'on-click-active-tab' : ''
+    const bgColor3 =
+      status === statsStatus.recovered ? 'on-click-recovered-tab' : ''
+    const bgColor4 =
+      status === statsStatus.deceased ? 'on-click-deceased-tab' : ''
+
     const {
       confirmed,
       active,
       recovered,
       deceased,
+      name,
+      population,
+      tested,
+      lastUpdated,
 
       // stateCode,
     } = specificStateData
+    const {match} = this.props
+    const {params} = match
+    const {stateCode} = params
+    const currentState = statesList.find(
+      state => state.state_code === stateCode,
+    )
+    const stateImage = currentState.image_url
+    const date = new Date(lastUpdated)
+    const options = {year: 'numeric', month: 'long', day: 'numeric'}
+    const updatedDate = date.toLocaleDateString('en-us', options)
 
     return (
       <div className="covid-select-page">
         <ul className="country-stats-container">
           <li
             onClick={this.changeConfirmBgColor}
-            className="tab-item-confirmed"
-            //   testid="stateSpecificConfirmedCasesContainer"
+            className={`tab-item-confirmed ${bgColor1}`}
+            // testid="stateSpecificConfirmedCasesContainer"
           >
             <p className="tag confirmed-tag">Confirmed</p>
             <img
@@ -419,9 +502,9 @@ class StateSpecificRoute extends Component {
             <p className="count confirmed-tag">{confirmed}</p>
           </li>
           <li
-            //    testid="stateSpecificActiveCasesContainer"
+            //  testid="stateSpecificActiveCasesContainer"
             onClick={this.changeActiveBgColor}
-            className="tab-item-active"
+            className={`tab-item-active ${bgColor2}`}
           >
             <p className="tag active-tag">Active</p>
 
@@ -435,8 +518,8 @@ class StateSpecificRoute extends Component {
           </li>
           <li
             onClick={this.changeRecoveredBgColor}
-            className="tab-item-recovered"
-            //  testid="stateSpecificRecoveredCasesContainer"
+            className={`tab-item-recovered ${bgColor3}`}
+            //   testid="stateSpecificRecoveredCasesContainer"
           >
             <p className="tag recovered-tag">Recovered</p>
 
@@ -450,8 +533,8 @@ class StateSpecificRoute extends Component {
           </li>
           <li
             onClick={this.changeDeceasedBgColor}
-            className="tab-item-deceased"
-            //    testid="stateSpecificDeceasedCasesContainer"
+            className={`tab-item-deceased ${bgColor4}`}
+            // testid="stateSpecificDeceasedCasesContainer"
           >
             <p className="tag deceased-tag">Deceased</p>
 
@@ -464,6 +547,25 @@ class StateSpecificRoute extends Component {
             <p className="count deceased-tag">{deceased}</p>
           </li>
         </ul>
+        <div className="state-image-container">
+          <img className="state-image" src={stateImage} alt={`${name}`} />
+          <div>
+            <p className="ncp-report-tag">NCP Report </p>
+            <ul className="ncp-report-stats-container">
+              <li className="report-item">
+                <p className="report-heading">Population</p>
+                <p className="report-count">{population}</p>
+              </li>
+              <li className="report-item">
+                <p className="report-heading">Tested</p>
+                <h1 className="report-count">{tested}</h1>
+                <p className="report-source-date-time">
+                  {`(As of ${updatedDate} per source)`}
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
         <h1 className={`heading-tag ${changeTextColor}`}>Top Districts</h1>
         <div>{this.renderTopDistricts()}</div>
       </div>
@@ -490,7 +592,7 @@ class StateSpecificRoute extends Component {
       <div className="bar-charts-container">
         <div className="bar-chart-desktop">
           <div>
-            <BarChart width={700} height={250} data={confirmedData}>
+            <BarChart width={700} height={400} data={confirmedData}>
               <XAxis
                 // label={{position: 'bottom', color: 'white'}}
                 dataKey="date"
@@ -510,7 +612,7 @@ class StateSpecificRoute extends Component {
             </BarChart>
           </div>
         </div>
-        {/*
+
         <div className="bar-chart-mobile">
           <div>
             <BarChart width={300} height={250} data={confirmedData}>
@@ -532,7 +634,7 @@ class StateSpecificRoute extends Component {
               />
             </BarChart>
           </div>
-        </div> */}
+        </div>
       </div>
     )
   }
@@ -571,7 +673,7 @@ class StateSpecificRoute extends Component {
             </BarChart>
           </div>
         </div>
-        {/* <div className="bar-chart-mobile">
+        <div className="bar-chart-mobile">
           <div>
             <BarChart width={300} height={250} data={activeData}>
               <XAxis
@@ -592,7 +694,7 @@ class StateSpecificRoute extends Component {
               />
             </BarChart>
           </div>
-        </div> */}
+        </div>
       </div>
     )
   }
@@ -631,7 +733,7 @@ class StateSpecificRoute extends Component {
             </BarChart>
           </div>
         </div>
-        {/* <div className="bar-chart-mobile">
+        <div className="bar-chart-mobile">
           <div>
             <BarChart width={300} height={250} data={recoveredData}>
               <XAxis
@@ -652,7 +754,7 @@ class StateSpecificRoute extends Component {
               />
             </BarChart>
           </div>
-        </div> */}
+        </div>
       </div>
     )
   }
@@ -691,7 +793,7 @@ class StateSpecificRoute extends Component {
             </BarChart>
           </div>
         </div>
-        {/* <div className="bar-chart-mobile">
+        <div className="bar-chart-mobile">
           <div>
             <BarChart width={300} height={250} data={deceasedData}>
               <XAxis
@@ -712,7 +814,7 @@ class StateSpecificRoute extends Component {
               />
             </BarChart>
           </div>
-        </div> */}
+        </div>
       </div>
     )
   }
@@ -750,8 +852,6 @@ class StateSpecificRoute extends Component {
       date: item.date,
       count: item.confirmed - (item.recovered + item.deceased),
     }))
-
-    console.log(activeData)
 
     const recoveredData = timelineDataList.map(item => ({
       date: item.date,
@@ -794,7 +894,7 @@ class StateSpecificRoute extends Component {
               </LineChart>
             </div>
           </div>
-          {/*  <div className="confirmed-cases-line-chart-desktop confirmed-bg">
+          <div className="confirmed-cases-line-chart-desktop confirmed-bg">
             <h1 className="confirmed-chart-tag">Confirmed</h1>
             <div className="line-chart">
               <LineChart width={800} height={300} data={confirmedData}>
@@ -814,7 +914,7 @@ class StateSpecificRoute extends Component {
                 />
               </LineChart>
             </div>
-          </div> */}
+          </div>
         </>
         <>
           <div className="confirmed-cases-line-chart-mobile active-bg">
@@ -843,7 +943,7 @@ class StateSpecificRoute extends Component {
               </LineChart>
             </div>
           </div>
-          {/* <div className="confirmed-cases-line-chart-desktop active-bg">
+          <div className="confirmed-cases-line-chart-desktop active-bg">
             <h1 className="confirmed-chart-tag active">Active</h1>
             <div className="line-chart">
               <LineChart
@@ -868,7 +968,7 @@ class StateSpecificRoute extends Component {
                 />
               </LineChart>
             </div>
-          </div> */}
+          </div>
         </>
         <>
           <div className="confirmed-cases-line-chart-desktop recovered-bg">
@@ -897,7 +997,7 @@ class StateSpecificRoute extends Component {
               </LineChart>
             </div>
           </div>
-          {/* <div className="confirmed-cases-line-chart-mobile recovered-bg">
+          <div className="confirmed-cases-line-chart-mobile recovered-bg">
             <h1 className="confirmed-chart-tag recovered">recovered</h1>
             <div className="line-chart">
               <LineChart
@@ -922,7 +1022,7 @@ class StateSpecificRoute extends Component {
                 />
               </LineChart>
             </div>
-          </div> */}
+          </div>
         </>
         <>
           <div className="confirmed-cases-line-chart-mobile deceased-bg">
@@ -951,7 +1051,7 @@ class StateSpecificRoute extends Component {
               </LineChart>
             </div>
           </div>
-          {/*  <div className="confirmed-cases-line-chart-desktop deceased-bg">
+          <div className="confirmed-cases-line-chart-desktop deceased-bg">
             <h1 className="confirmed-chart-tag deceased">Deceased</h1>
             <div className="line-chart">
               <LineChart
@@ -976,7 +1076,7 @@ class StateSpecificRoute extends Component {
                 />
               </LineChart>
             </div>
-          </div> */}
+          </div>
         </>
         <>
           <div className="confirmed-cases-line-chart-desktop tested-bg">
@@ -1005,7 +1105,7 @@ class StateSpecificRoute extends Component {
               </LineChart>
             </div>
           </div>
-          {/*  <div className="confirmed-cases-line-chart-mobile tested-bg">
+          <div className="confirmed-cases-line-chart-mobile tested-bg">
             <h1 className="confirmed-chart-tag tested">Tested</h1>
             <div className="line-chart">
               <LineChart
@@ -1030,7 +1130,7 @@ class StateSpecificRoute extends Component {
                 />
               </LineChart>
             </div>
-          </div> */}
+          </div>
         </>
       </div>
     )
@@ -1051,7 +1151,7 @@ class StateSpecificRoute extends Component {
   }
 
   renderTimelineLoadingView = () => (
-    <div /*  testid="timelinesDataLoader" */ className="loader-spinner">
+    <div /* testid="timelinesDataLoader" */ className="loader-spinner">
       <Loader height={50} width={50} type="Oval" color="#007BFF" />
     </div>
   )
@@ -1088,17 +1188,7 @@ class StateSpecificRoute extends Component {
   getApiSuccessView = () => {
     const {specificStateData} = this.state
 
-    const {
-      lastUpdated,
-      name,
-      tested,
-      // confirmed,
-      // active,
-      // recovered,
-      // deceased,
-      // stateCode,
-    } = specificStateData
-    // const {districtsDataList} = specificStateData
+    const {lastUpdated, name, tested} = specificStateData
 
     const date = new Date(lastUpdated)
     const options = {year: 'numeric', month: 'long', day: 'numeric'}

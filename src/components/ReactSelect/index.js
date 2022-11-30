@@ -1,69 +1,60 @@
-import {Component} from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react'
 import Select from 'react-select'
-import {BiChevronRightSquare} from 'react-icons/bi'
 import './index.css'
 
-/* const colourStyles = {
+const colourStyles = {
   control: base => ({
     ...base,
     background: '#2F2F43',
     border: 'none',
     borderOutline: 'none',
+    fontSize: '14px',
+    color: '#ffffff',
   }),
   dropdownIndicator: base => ({
     ...base,
-    color: 'transparent',
   }),
-
-  option: base => ({
-    ...base,
-    background: '#161625',
-  }),
-
   singleValue: base => ({
     ...base,
-    color: 'transparent',
+    color: '#ffffff',
   }),
+  option: (base, state) => ({
+    ...base,
+
+    background: state.isFocused ? '#202841' : '#161625',
+    color: state.isFocused ? '#0967D2' : '#94A3B8',
+    padding: '10px',
+  }),
+
   input: base => ({
     ...base,
-    color: '#64748B',
+    color: '#ffffff',
   }),
 }
-*/
 
-class ReactSelect extends Component {
+class ReactSelect extends React.Component {
   render() {
-    const {selected, onChange, covidStateWiseData} = this.props
-    const options = covidStateWiseData.map(item => ({
-      label: (
-        <ul testid="searchResultsUnorderedList" className="labels-container">
-          <li className="label">
-            <Link className="link-item" to={`/state/${item.stateCode}`}>
-              <p className="label-name">{item.name}</p>
-              <button type="button" className="state-code-container">
-                <p className="label-state-code">{item.stateCode}</p>
-                <BiChevronRightSquare className="right-arrow" />
-              </button>
-            </Link>
-          </li>
-        </ul>
-      ),
-      value: item.stateCode,
-      stateCode: item.stateCode,
-    }))
-
+    const {selected, onChange, options, placeholder} = this.props
     return (
       <Select
-        className="select-element select-bg"
         value={selected}
-        // styles={colourStyles}
         onChange={onChange}
         options={options}
-        // styles={colorStyles}
-        placeholder="Enter the State"
-        classNamePrefix="select-bg"
-        // components={{Menu, Option}}
+        placeholder={placeholder}
+        className="select"
+        theme={theme => ({
+          ...theme,
+          borderRadius: 0,
+
+          colors: {
+            ...theme.colors,
+            primary25: '#0967D2',
+            primary: 'dangerLight',
+          },
+        })}
+        borderColor="1px solid #0967D2"
+        styles={colourStyles}
+        clearIndicator
       />
     )
   }

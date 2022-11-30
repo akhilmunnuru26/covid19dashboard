@@ -26,10 +26,6 @@
   align-items: center;
 }
 
-.links {
-  text-decoration: none;
-}
-
 .menu-button {
   background-color: transparent;
   border: none;
@@ -54,7 +50,6 @@
   font-weight: 400;
   font-size: 16px;
   height: 26px;
-  width: 42px;
   padding-left: 32px;
   top: 80px;
   border-radius: null px;
@@ -64,9 +59,13 @@
   text-decoration: none;
   color: #94a3b8;
 }
+.links:hover {
+  color: #f8fafc;
+  text-decoration: none;
+}
 .nav-bar-tabs-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -109,11 +108,9 @@
   .desktop-nav-link-items {
     list-style-type: none;
     height: 24px;
-    width: 43px;
-    left: 1156px;
-    top: 28px;
     border-radius: null px;
     margin-right: 24px;
+    color: #94a3b8;
   }
   .focus {
     color: #f8fafc;
@@ -127,5 +124,15 @@
     left: 0px;
     top: 0px;
     border-radius: 0px;
+  }
+  .desktop-nav-link-items {
+    list-style-type: none;
+    height: 24px;
+    border-radius: null px;
+    margin-right: 24px;
+    color: #94a3b8;
+  }
+  .desktop-nav-link-items:hover {
+    color: #f8fafc;
   }
 }

@@ -14,14 +14,12 @@ const apiStatusConstants = {
 
 class About extends Component {
   state = {
-    lastUpdatedDateTime: '',
     faqData: '',
     apiStatus: apiStatusConstants.inProgress,
   }
 
   componentDidMount() {
     this.getFaqs()
-    //   this.getLastUpdatedTime()
   }
 
   renderApiViews = () => {
@@ -39,14 +37,12 @@ class About extends Component {
   }
 
   renderSuccessView = () => {
-    const {faqData /* lastUpdatedDateTime */} = this.state
+    const {faqData} = this.state
 
-    // const date = new Date(lastUpdatedDateTime)
-    // const updatedDate = date.toDateString()
     return (
       <div>
         <h1 className="about-page-main-heading">About</h1>
-        {/* <p className="last-updated-time">Last update on {updatedDate}</p> */}
+
         <h1 className="about-vaccine-distribution">
           COVID-19 vaccines be ready for distribution
         </h1>
@@ -79,27 +75,10 @@ class About extends Component {
   renderFailureView = () => <h1>Hello</h1>
 
   renderLoadingView = () => (
-    <div /* testid="aboutRouteLoader" */ className="loader-spinner">
+    <div /* testid="aboutRouteLoader"  */ className="loader-spinner">
       <Loader height={50} width={50} type="Oval" color="#007BFF" />
     </div>
   )
-
-  /* getLastUpdatedTime = async () => {
-    const apiUrl = `https://apis.ccbp.in/covid19-state-wise-data/`
-    const responseObject = await fetch(apiUrl)
-    if (responseObject.ok === true) {
-      const dataObject = await responseObject.json()
-      const stateObject = dataObject.AP
-      const lastUpdatedDateTime = stateObject.meta.last_updated
-      this.setState({
-        lastUpdatedDateTime,
-        apiStatus: apiStatusConstants.success,
-      })
-    } else {
-      this.setState({apiStatus: apiStatusConstants.failure})
-    }
-  }
-*/
 
   getFaqs = async () => {
     const faqApiUrl = 'https://apis.ccbp.in/covid19-faqs'

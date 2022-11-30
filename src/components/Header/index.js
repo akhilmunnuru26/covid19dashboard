@@ -21,11 +21,11 @@ class Header extends Component {
       <div>
         <nav className="nav-bar">
           <div className="">
-            <Link to="/" className="links">
-              <h1 className="app-logo">
+            <h1 className="app-logo">
+              <Link to="/" className="links">
                 COVID19<span className="span-logo">INDIA</span>
-              </h1>
-            </Link>
+              </Link>
+            </h1>
           </div>
 
           <div className="mobile-icon">
@@ -42,16 +42,17 @@ class Header extends Component {
             </button>
           </div>
           <ul className="desktop-section">
-            <li className="desktop-nav-link-items">
-              <Link className="links" to="/">
-                Home
-              </Link>
-            </li>
-            <li className="desktop-nav-link-items">
-              <Link className="links" to="/about">
-                About
-              </Link>
-            </li>
+            <Link className="links desktop-nav-link-items" to="/">
+              <li className="desktop-nav-link-items">Home</li>
+            </Link>
+
+            <Link className="links desktop-nav-link-items" to="/vaccination">
+              <li className="desktop-nav-link-items">Vaccination</li>
+            </Link>
+
+            <Link className="links desktop-nav-link-items" to="/about">
+              <li className="desktop-nav-link-items">About</li>
+            </Link>
           </ul>
         </nav>
         {showNavbarTabs && (
@@ -61,6 +62,11 @@ class Header extends Component {
                 <li className="nav-link-items">
                   <Link className="links" to="/">
                     Home
+                  </Link>
+                </li>
+                <li className="nav-link-items">
+                  <Link className="links" to="/vaccination">
+                    Vaccination
                   </Link>
                 </li>
                 <li className="nav-link-items">

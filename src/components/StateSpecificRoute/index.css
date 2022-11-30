@@ -29,8 +29,6 @@
 }
 
 .state-name-container {
-  height: 32px;
-  width: 156px;
   border-radius: 16px;
   padding: 5.27059px 10.5412px;
   background-color: rgba(2, 132, 199, 0.16);
@@ -45,7 +43,75 @@
   color: #0ea5e9;
   font-size: 16px;
 }
+
+.state-image-container {
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.state-image {
+  width: 300px;
+}
+
+.ncp-report-tag {
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: 500;
+}
+.ncp-report-stats-container {
+  padding-left: 0px;
+  display: flex;
+  align-items: flex-start;
+}
+.report-item {
+  list-style-type: none;
+  margin-right: 32px;
+}
+.report-heading {
+  color: #f1f5f9;
+  font-size: 12px;
+  font-weight: 400;
+}
+.report-count {
+  font-size: 16px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+.report-source-date-time {
+  color: #cbd5e1;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+@media screen and (min-width: 768px) {
+  .state-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 80px;
+  }
+  .ncp-report-stats-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .ncp-report-tag {
+    font-size: 20px;
+  }
+  .report-heading {
+    font-size: 16px;
+  }
+  .report-count {
+    font-size: 24px;
+  }
+  .report-source-date-time {
+    font-size: 14px;
+  }
+}
+
 @media screen and (min-width: 992px) {
+  .state-image {
+    width: 421px;
+  }
   .specific-state-name {
     font-size: 25px;
   }
@@ -132,6 +198,20 @@
   margin-bottom: 16px;
 }
 
+.on-click-confirmed-tab {
+  background-color: #331427;
+}
+
+.on-click-active-tab {
+  background-color: #132240;
+}
+.on-click-recovered-tab {
+  background-color: #182829;
+}
+.on-click-deceased-tab {
+  background-color: #212230;
+}
+
 .heading-tag {
   font-size: 24px;
   color: #94a3b8;
@@ -181,15 +261,21 @@
   padding-left: 0px;
   flex-wrap: wrap;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.top-district-list-item {
+  margin-left: 13px;
+  margin-right: 13px;
+  list-style-type: none;
+  width: 125px;
 }
 
 .top-district-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  list-style-type: none;
+  justify-content: space-evenly;
 }
 
 .top-district-name-confirmed {
@@ -211,7 +297,6 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 14.06px;
-  width: 100%;
   margin-left: 16px;
 }
 .top-district-name-deceased {
@@ -219,7 +304,6 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 14.06px;
-  width: 100%;
   margin-left: 16px;
 }
 
@@ -303,8 +387,13 @@
   .top-districts-container {
     flex-wrap: wrap;
   }
+  .top-district-list-item {
+    margin-left: 35px;
+    margin-right: 35px;
+    width: 200px;
+    max-width: 250px;
+  }
   .top-district-item {
-    width: 250px;
     color: #94a3b8;
   }
 
